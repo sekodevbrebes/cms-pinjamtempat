@@ -1,45 +1,153 @@
-<!DOCTYPE html>
+{{-- <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="csrf-token" content="{{ csrf_token() }}">
 
-        <title>{{ config('app.name', 'Laravel') }}</title>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 
-        <!-- Fonts -->
-        <link rel="preconnect" href="https://fonts.bunny.net">
-        <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
+    <title>{{ config('app.name', 'Laravel') }}</title>
 
-        <!-- Scripts -->
-        @vite(['resources/css/app.css', 'resources/js/app.js'])
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.bunny.net">
+    <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
 
-        <!-- Styles -->
-        @livewireStyles
-    </head>
-    <body class="font-sans antialiased">
-        <x-banner />
+    <!-- Scripts -->
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
 
-        <div class="min-h-screen bg-gray-100">
-            @livewire('navigation-menu')
+    <!-- Styles -->
+    @livewireStyles
+</head>
 
-            <!-- Page Heading -->
-            @if (isset($header))
-                <header class="bg-white shadow">
-                    <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-                        {{ $header }}
+<body class="font-sans antialiased">
+    <x-banner />
+
+    <div class="min-h-screen bg-gray-100">
+        @livewire('navigation-menu')
+
+        <!-- Page Heading -->
+        @if (isset($header))
+            <header class="bg-white shadow">
+                <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
+                    {{ $header }}
+                </div>
+            </header>
+        @endif
+
+        <!-- Page Content -->
+        <main>
+            {{ $slot }}
+        </main>
+    </div>
+
+    @stack('modals')
+
+    @livewireScripts
+</body>
+
+</html> --}}
+
+
+<!doctype html>
+<html lang="en">
+<!-- [Head] start -->
+
+<head>
+    <title>Sample Page | Pinjam Tempat</title>
+    <!-- [Meta] -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0,minimal-ui">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description"
+        content="Able Pro is trending dashboard template made using Bootstrap 5 design framework. Able Pro is available in Bootstrap, React, CodeIgniter, Angular,  and .net Technologies.">
+    <meta name="keywords"
+        content="Bootstrap admin template, Dashboard UI Kit, Dashboard Template, Backend Panel, react dashboard, angular dashboard">
+    <meta name="author" content="Phoenixcoded"><!-- [Favicon] icon -->
+    <link rel="icon" href="../assets/images/favicon.svg" type="image/x-icon"><!-- [Font] Family -->
+    <link rel="stylesheet" href="../assets/fonts/inter/inter.css" id="main-font-link">
+    <!-- [phosphor Icons] https://phosphoricons.com/ -->
+    <link rel="stylesheet" href="../assets/fonts/phosphor/duotone/style.css">
+    <!-- [Tabler Icons] https://tablericons.com -->
+    <link rel="stylesheet" href="../assets/fonts/tabler-icons.min.css">
+    <!-- [Feather Icons] https://feathericons.com -->
+    <link rel="stylesheet" href="../assets/fonts/feather.css">
+    <!-- [Font Awesome Icons] https://fontawesome.com/icons -->
+    <link rel="stylesheet" href="../assets/fonts/fontawesome.css">
+    <!-- [Material Icons] https://fonts.google.com/icons -->
+    <link rel="stylesheet" href="../assets/fonts/material.css">
+    <!-- [Template CSS Files] -->
+    <link rel="stylesheet" href="../assets/css/style.css" id="main-style-link">
+    <link rel="stylesheet" href="../assets/css/style-preset.css">
+</head>
+<!-- [Head] end -->
+
+<!-- [Body] Start -->
+
+<body data-pc-preset="preset-1" data-pc-sidebar-caption="true" data-pc-layout="vertical" data-pc-direction="ltr"
+    data-pc-theme_contrast="" data-pc-theme="light"><!-- [ Pre-loader ] start -->
+    <div class="page-loader">
+        <div class="bar"></div>
+    </div>
+    <!-- [ Pre-loader ] End -->
+
+    <!-- [ Sidebar Menu ] start -->
+    @includeIf('layouts.partials.sidebar')
+    <!-- [ Sidebar Menu ] end -->
+
+    <!-- [ Header Topbar ] start -->
+    @includeIf('layouts.partials.header')
+    <!-- [ Header ] end -->
+
+    <!-- [ Main Content ] start -->
+    <div class="pc-container">
+        <div class="pc-content"><!-- [ breadcrumb ] start -->
+            <div class="page-header">
+                <div class="page-block">
+                    <div class="row align-items-center">
+                        <div class="col-md-12">
+                            <ul class="breadcrumb">
+                                <li class="breadcrumb-item"><a href="../dashboard/index.html">Home</a></li>
+                                <li class="breadcrumb-item"><a href="javascript: void(0)">Other</a></li>
+                                <li class="breadcrumb-item" aria-current="page">Sample Page</li>
+                            </ul>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="page-header-title">
+                                <h2 class="mb-0">Sample Page</h2>
+                            </div>
+                        </div>
                     </div>
-                </header>
-            @endif
-
-            <!-- Page Content -->
-            <main>
-                {{ $slot }}
-            </main>
+                </div>
+            </div><!-- [ breadcrumb ] end --><!-- [ Main Content ] start -->
+            <div class="row">
+                <!-- [ sample-page ] start -->
+                <div class="col-sm-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h5>Hello card</h5>
+                        </div>
+                        <div class="card-body"></div>
+                    </div>
+                </div><!-- [ sample-page ] end -->
+            </div><!-- [ Main Content ] end -->
         </div>
+    </div>
+    <!-- [ Main Content ] end -->
 
-        @stack('modals')
+    <!-- [ Footer] start  -->
+    @includeIf('layouts.partials.footer')
+    <!-- [ Footer] end -->
 
-        @livewireScripts
-    </body>
+    <!-- Required Js -->
+    <script data-cfasync="false" src="../cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
+    <script src="../assets/js/plugins/popper.min.js"></script>
+    <script src="../assets/js/plugins/simplebar.min.js"></script>
+    <script src="../assets/js/plugins/bootstrap.min.js"></script>
+    <script src="../assets/js/fonts/custom-font.js"></script>
+    <script src="../assets/js/pcoded.js"></script>
+    <script src="../assets/js/plugins/feather.min.js"></script>
+
+</body>
+<!-- [Body] end -->
+
 </html>
