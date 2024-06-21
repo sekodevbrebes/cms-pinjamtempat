@@ -34,13 +34,13 @@
                         <li class="pc-item"><a class="pc-link" href="../demo/layout-tab.html">Tab</a></li>
                     </ul>
                 </li>
-                <li class="pc-item pc-caption"><label>Widget</label> <svg class="pc-icon">
+                {{-- <li class="pc-item pc-caption"><label>Widget</label> <svg class="pc-icon">
                         <use xlink:href="#custom-presentation-chart"></use>
-                    </svg></li>
-                <li class="pc-item"><a href="../widget/w_statistics.html" class="pc-link"><span class="pc-micon"><svg
-                                class="pc-icon">
-                                <use xlink:href="#custom-story"></use>
-                            </svg> </span><span class="pc-mtext">Statistics</span></a></li>
+                    </svg></li> --}}
+                <li class="pc-item"><a href="{{ route('users.index') }}" class="pc-link"><span class="pc-micon">
+                            <svg class="pc-icon">
+                                <use xlink:href="#custom-user-square"></use>
+                            </svg> </span><span class="pc-mtext">Users</span></a></li>
                 <li class="pc-item"><a href="../widget/w_data.html" class="pc-link"><span class="pc-micon"><svg
                                 class="pc-icon">
                                 <use xlink:href="#custom-fatrows"></use>

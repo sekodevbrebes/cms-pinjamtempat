@@ -52,8 +52,10 @@
 <html lang="en">
 <!-- [Head] start -->
 
+
 <head>
-    <title>Sample Page | Pinjam Tempat</title>
+    {{-- <title>Sample Page | Pinjam Tempat</title> --}}
+    <title>App Name - @yield('title')</title>
     <!-- [Meta] -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0,minimal-ui">
@@ -62,9 +64,16 @@
         content="Able Pro is trending dashboard template made using Bootstrap 5 design framework. Able Pro is available in Bootstrap, React, CodeIgniter, Angular,  and .net Technologies.">
     <meta name="keywords"
         content="Bootstrap admin template, Dashboard UI Kit, Dashboard Template, Backend Panel, react dashboard, angular dashboard">
-    <meta name="author" content="Phoenixcoded"><!-- [Favicon] icon -->
-    <link rel="icon" href="../assets/images/favicon.svg" type="image/x-icon"><!-- [Font] Family -->
+    <meta name="author" content="Phoenixcoded">
+    <!-- [Favicon] icon -->
+    <link rel="icon" href="../assets/images/favicon.svg" type="image/x-icon">
+    <!-- [Font] Family -->
     <link rel="stylesheet" href="../assets/fonts/inter/inter.css" id="main-font-link">
+    <!-- [Page specific CSS] start -->
+    <!-- data tables css -->
+    <link rel="stylesheet" href="../assets/css/plugins/dataTables.bootstrap5.min.css" />
+    <!-- [Page specific CSS] end -->
+
     <!-- [phosphor Icons] https://phosphoricons.com/ -->
     <link rel="stylesheet" href="../assets/fonts/phosphor/duotone/style.css">
     <!-- [Tabler Icons] https://tablericons.com -->
@@ -75,9 +84,12 @@
     <link rel="stylesheet" href="../assets/fonts/fontawesome.css">
     <!-- [Material Icons] https://fonts.google.com/icons -->
     <link rel="stylesheet" href="../assets/fonts/material.css">
+    <!-- [Button Pagination On User Table CSS Files] -->
+    <link rel="stylesheet" href="../assets/css/plugins/style.css" />
     <!-- [Template CSS Files] -->
     <link rel="stylesheet" href="../assets/css/style.css" id="main-style-link">
     <link rel="stylesheet" href="../assets/css/style-preset.css">
+
 </head>
 <!-- [Head] end -->
 
@@ -107,36 +119,32 @@
                         <div class="col-md-12">
                             <ul class="breadcrumb">
                                 <li class="breadcrumb-item"><a href="../dashboard/index.html">Home</a></li>
-                                <li class="breadcrumb-item"><a href="javascript: void(0)">Other</a></li>
-                                <li class="breadcrumb-item" aria-current="page">Sample Page</li>
+                                <li class="breadcrumb-item"><a href="javascript: void(0)">@yield('title')</a></li>
                             </ul>
                         </div>
                         <div class="col-md-12">
                             <div class="page-header-title">
-                                <h2 class="mb-0">Sample Page</h2>
+                                <h2 class="mb-0"> @yield('title')</h2>
                             </div>
                         </div>
                     </div>
                 </div>
             </div><!-- [ breadcrumb ] end --><!-- [ Main Content ] start -->
             <div class="row">
-                <!-- [ sample-page ] start -->
-                <div class="col-sm-12">
-                    <div class="card">
-                        <div class="card-header">
-                            <h5>Hello card</h5>
-                        </div>
-                        <div class="card-body"></div>
-                    </div>
-                </div><!-- [ sample-page ] end -->
+                <!-- [ content ] start -->
+                @yield('contents')
+                <!-- [ content ] end -->
             </div><!-- [ Main Content ] end -->
         </div>
     </div>
     <!-- [ Main Content ] end -->
 
+
     <!-- [ Footer] start  -->
     @includeIf('layouts.partials.footer')
     <!-- [ Footer] end -->
+
+
 
     <!-- Required Js -->
     <script data-cfasync="false" src="../cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
@@ -146,7 +154,38 @@
     <script src="../assets/js/fonts/custom-font.js"></script>
     <script src="../assets/js/pcoded.js"></script>
     <script src="../assets/js/plugins/feather.min.js"></script>
+    <!-- [Page Specific JS] start -->
 
+    <!-- datatable Js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="../assets/js/plugins/dataTables.min.js"></script>
+    <script src="../assets/js/plugins/dataTables.bootstrap5.min.js"></script>
+
+    <!-- [Page Specific JS] start -->
+    <script src="../assets/js/plugins/simple-datatables.js"></script>
+    <script>
+        const dataTable = new simpleDatatables.DataTable("#pc-dt-simple", {
+            sortable: false,
+            perPage: 5,
+        });
+    </script>
+
+
+    {{-- <script>
+        // [ base style ]
+        $('#base-style').DataTable();
+
+        // [ no style ]
+        $('#no-style').DataTable();
+
+        // [ compact style ]
+        $('#compact').DataTable();
+
+        // [ hover style ]
+        $('#table-style-hover').DataTable();
+    </script> --}}
+
+    @include('sweetalert::alert')
 </body>
 <!-- [Body] end -->
 
