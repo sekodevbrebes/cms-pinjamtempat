@@ -7,8 +7,8 @@ use Illuminate\Support\Facades\Storage;
 use RealRashid\SweetAlert\Facades\Alert;
 
 use App\Models\User;
-use App\Http\Requests\StoreUserRequest;
-use App\Http\Requests\UpdateUserRequest;
+use App\Http\Requests\User\StoreUserRequest;
+use App\Http\Requests\User\UpdateUserRequest;
 
 
 use File;
@@ -80,7 +80,9 @@ class UserController extends Controller
      */
     public function edit(User $user)
     {
-        //
+        return view('user.edit',[
+            'user' => $user,
+        ]);
     }
 
     /**
@@ -88,8 +90,46 @@ class UserController extends Controller
      */
     public function update(UpdateUserRequest $request, User $user)
     {
-        //
+     
+    // Chat GPT - Berikut adalah skrip yang telah diubah sehingga ketika input password tidak diisi, proses update tetap berjalan tanpa mengubah password yang sudah ada:
+       // get all request from frontsite
+       $data = $request->all();
+
+         // upload process here
+       // change format image
+       if(isset($data['image'])){
+
+            // first checking old photo to delete from storage
+           $get_item = $user['image'];
+
+           // change file locations
+           $data['image'] = $request->file('image')->store(
+               'assets/image-user', 'public'
+           );
+
+           // delete old image from storage
+           $data_old = 'storage/'.$get_item;
+           if (File::exists($data_old)) {
+               File::delete($data_old);
+           }else{
+               File::delete('storage/app/public/'.$get_item);
+           }
+
+       }
+
+         // Remove password from data if it's not filled
+        if (empty($data['password'])) {
+            unset($data['password']);
+        }
+
+
+       // update to database
+       $user->update($data);
+
+       alert()->success('Success Message', 'Successfully updated User');
+       return redirect()->route('users.index');
     }
+
 
     /**
      * Remove the specified resource from storage.

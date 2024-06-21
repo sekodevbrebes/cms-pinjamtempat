@@ -75,35 +75,19 @@
                                                 @if ($item->id != 1)
                                                     <li class="list-inline-item align-bottom" data-bs-toggle="tooltip"
                                                         title="Edit">
-                                                        <a href="#"
+                                                        <a class="avtar avtar-xs btn-link-success btn-pc-default"
+                                                            href="{{ route('users.edit', $item->id) }}">
+                                                            <i class="ti ti-edit-circle f-18"></i>
+                                                        </a>
+                                                        {{-- <a href="#"
                                                             class="avtar avtar-xs btn-link-success btn-pc-default"
                                                             data-bs-toggle="modal"
-                                                            data-bs-target="#customer-edit_add-modal"><i
-                                                                class="ti ti-edit-circle f-18"></i></a>
+                                                            data-bs-target="#customer-edit_add-modal">
+                                                            <i class="ti ti-edit-circle f-18"></i></a> --}}
                                                     </li>
 
                                                     <li class="list-inline-item align-bottom" data-bs-toggle="tooltip"
                                                         title="Delete">
-
-                                                        {{-- <form action="{{ route('users.destroy', $item->id) }}" method="POST"
-                                                    class="d-inline" data-confirm-delete="true">
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    <button type="submit" class="btn btn-danger">Delete</button>
-                                                </form> --}}
-
-                                                        {{-- <a href="{{ route('users.destroy', $item->id) }}"
-                                                    class="btn btn-danger" data-confirm-delete="true">Delete</a> --}}
-
-                                                        {{-- <form action="{{ route('users.destroy', $item->id) }}" method="POST"
-                                                    onsubmit="return confirm('Are you sure want to delete this data ?');">
-                                                    <input type="hidden" name="_method" value="DELETE">
-                                                    <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                                                    <button type="submit" class="dropdown-item">
-                                                        <i class="ti ti-trash f-18"></i> Delete
-                                                    </button>
-                                                </form> --}}
-
 
                                                         <a href="{{ route('users.destroy', $item->id) }}"
                                                             data-confirm-delete="true"

@@ -16,7 +16,7 @@
                 <li class="dropdown pc-h-item header-user-profile"><a
                         class="pc-head-link dropdown-toggle arrow-none me-0" data-bs-toggle="dropdown" href="#"
                         role="button" aria-haspopup="false" data-bs-auto-close="outside" aria-expanded="false"><img
-                            src="../assets/images/user/avatar-2.jpg" alt="user-image" class="user-avtar">
+                            src="{{ asset('/assets/images/user/avatar-2.jpg') }}" alt="user-image" class="user-avtar">
                     </a>
                     <div class="dropdown-menu dropdown-menu-end pc-h-dropdown"><a href="#!"
                             class="dropdown-item"><i class="ti ti-user"></i> <span>My Account</span> </a><a
