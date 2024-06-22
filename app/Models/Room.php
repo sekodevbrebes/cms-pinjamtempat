@@ -9,5 +9,14 @@ class Room extends Model
 {
     use HasFactory;
 
-    protected $guarded = ['id'];
+    // protected $guarded = ['id'];
+    protected $fillable = [
+        'name', 'location', 'capacity', 'rate', 'facility', 'image'
+    ];
+
+    // Mengkast field facility menjadi array
+    // protected $casts = [
+    //     'facility' => 'array',
+    // ];
+
 }

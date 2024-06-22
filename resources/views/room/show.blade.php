@@ -21,118 +21,31 @@
                                             </div>
                                         </div>
 
-                                        <div class="card-body position-absolute bottom-0 end-0">
-                                            <ul class="list-inline ms-auto mb-0 prod-likes">
-                                                <li class="list-inline-item m-0">
-                                                    <a href="#"
-                                                        class="avtar avtar-xs text-white text-hover-primary"><i
-                                                            class="ti ti-zoom-in f-18"></i></a>
-                                                </li>
-                                                <li class="list-inline-item m-0">
-                                                    <a href="#"
-                                                        class="avtar avtar-xs text-white text-hover-primary"><i
-                                                            class="ti ti-zoom-out f-18"></i></a>
-                                                </li>
-                                                <li class="list-inline-item m-0">
-                                                    <a href="#"
-                                                        class="avtar avtar-xs text-white text-hover-primary"><i
-                                                            class="ti ti-rotate-clockwise f-18"></i></a>
-                                                </li>
-                                            </ul>
-                                        </div>
 
                                         <!-- Menampilkan gambar-gambar -->
-                                        {{-- @if ($room->image)
+
+                                        @if ($room->image)
                                             @foreach (json_decode($room->image) as $image)
-                                                <img src="{{ asset('storage/' . $image) }}" alt="Room Image">
+                                                <div class="carousel-item active">
+                                                    <img src="{{ asset('storage/' . $image) }}" class="d-block w-100"
+                                                        height="100%" alt="Room Image">
+                                                </div>
                                             @endforeach
-                                        @endif --}}
-
-
-                                        <div class="carousel-item active">
-                                            <img src="../assets/images/application/img-prod-1.jpg" class="d-block w-100"
-                                                alt="Product images" />
-                                        </div>
-
-                                        <div class="carousel-item">
-                                            <img src="../assets/images/application/img-prod-2.jpg" class="d-block w-100"
-                                                alt="Product images" />
-                                        </div>
-
-                                        <div class="carousel-item">
-                                            <img src="../assets/images/application/img-prod-3.jpg" class="d-block w-100"
-                                                alt="Product images" />
-                                        </div>
-
-                                        <div class="carousel-item">
-                                            <img src="../assets/images/application/img-prod-4.jpg" class="d-block w-100"
-                                                alt="Product images" />
-                                        </div>
-
-                                        <div class="carousel-item">
-                                            <img src="../assets/images/application/img-prod-5.jpg" class="d-block w-100"
-                                                alt="Product images" />
-                                        </div>
-
-                                        <div class="carousel-item">
-                                            <img src="../assets/images/application/img-prod-6.jpg" class="d-block w-100"
-                                                alt="Product images" />
-                                        </div>
-
-                                        <div class="carousel-item">
-                                            <img src="../assets/images/application/img-prod-7.jpg" class="d-block w-100"
-                                                alt="Product images" />
-                                        </div>
-
-                                        <div class="carousel-item">
-                                            <img src="../assets/images/application/img-prod-8.jpg" class="d-block w-100"
-                                                alt="Product images" />
-                                        </div>
+                                        @endif
                                     </div>
 
-                                    <ol
+                                    {{-- <ol
                                         class="carousel-indicators position-relative product-carousel-indicators my-sm-3 mx-0">
-                                        <li data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0"
-                                            class="w-25 h-auto active">
-                                            <img src="../assets/images/application/img-prod-1.jpg"
-                                                class="d-block wid-50 rounded" alt="Product images" />
-                                        </li>
-                                        <li data-bs-target="#carouselExampleCaptions" data-bs-slide-to="1"
-                                            class="w-25 h-auto">
-                                            <img src="../assets/images/application/img-prod-2.jpg"
-                                                class="d-block wid-50 rounded" alt="Product images" />
-                                        </li>
-                                        <li data-bs-target="#carouselExampleCaptions" data-bs-slide-to="2"
-                                            class="w-25 h-auto">
-                                            <img src="../assets/images/application/img-prod-3.jpg"
-                                                class="d-block wid-50 rounded" alt="Product images" />
-                                        </li>
-                                        <li data-bs-target="#carouselExampleCaptions" data-bs-slide-to="3"
-                                            class="w-25 h-auto">
-                                            <img src="../assets/images/application/img-prod-4.jpg"
-                                                class="d-block wid-50 rounded" alt="Product images" />
-                                        </li>
-                                        <li data-bs-target="#carouselExampleCaptions" data-bs-slide-to="4"
-                                            class="w-25 h-auto">
-                                            <img src="../assets/images/application/img-prod-5.jpg"
-                                                class="d-block wid-50 rounded" alt="Product images" />
-                                        </li>
-                                        <li data-bs-target="#carouselExampleCaptions" data-bs-slide-to="5"
-                                            class="w-25 h-auto">
-                                            <img src="../assets/images/application/img-prod-6.jpg"
-                                                class="d-block wid-50 rounded" alt="Product images" />
-                                        </li>
-                                        <li data-bs-target="#carouselExampleCaptions" data-bs-slide-to="6"
-                                            class="w-25 h-auto">
-                                            <img src="../assets/images/application/img-prod-7.jpg"
-                                                class="d-block wid-50 rounded" alt="Product images" />
-                                        </li>
-                                        <li data-bs-target="#carouselExampleCaptions" data-bs-slide-to="7"
-                                            class="w-25 h-auto">
-                                            <img src="../assets/images/application/img-prod-8.jpg"
-                                                class="d-block wid-50 rounded" alt="Product images" />
-                                        </li>
-                                    </ol>
+                                        @if ($room->image)
+                                            @foreach (json_decode($room->image) as $image)
+                                                <li data-bs-target="#carouselExampleCaptions" data-bs-slide-to="3"
+                                                    class="w-25 h-auto active">
+                                                    <img src="{{ asset('storage/' . $image) }}"
+                                                        class="d-block wid-50 rounded" />
+                                                </li>
+                                            @endforeach
+                                        @endif
+                                    </ol> --}}
                                 </div>
                             </div>
                         </div>
@@ -150,15 +63,11 @@
                                 <span class="text-sm text-muted">(4.0)</span>
                             </div>
 
+                            <p>Capacity: Maksimal {{ $room->capacity }} Orang</p>
+
                             <h5 class="mt-4 mb-3 f-w-500">Facility</h5>
-                            <ul>
-                                <li class="mb-2">Care Instructions: Hand Wash Only</li>
-                                <li class="mb-2">Fit Type: Regular</li>
-                                <li class="mb-2">Dark Blue Regular Women Jeans</li>
-                                <li class="mb-2">Fabric : 100% Cotton</li>
-                            </ul>
 
-
+                            {!! $room->facility !!}
 
                         </div>
                     </div>
@@ -171,47 +80,21 @@
                 </div>
                 <div class="card-body">
                     <div class="row">
-                        <div class="col-sm-6 col-xl-3">
-                            <div class="card product-card">
-                                <div class="card-img-top">
-                                    <a href="ecom_product-details.html">
-                                        <img src="../assets/images/application/img-prod-1.jpg" alt="image"
-                                            class="img-prod img-fluid" />
-                                    </a>
-                                </div>
 
-                            </div>
-                        </div>
-                        <div class="col-sm-6 col-xl-3">
-                            <div class="card product-card">
-                                <div class="card-img-top">
-                                    <a href="ecom_product-details.html"><img
-                                            src="../assets/images/application/img-prod-2.jpg" alt="image"
-                                            class="img-prod img-fluid" /></a>
+                        @if ($room->image)
+                            @foreach (json_decode($room->image) as $image)
+                                <div class="col-sm-6 col-xl-3">
+                                    <div class="card product-card">
+                                        <div class="card-img-top">
+                                            <a href="ecom_product-details.html">
+                                                <img src="{{ asset('storage/' . $image) }}" class="img-prod img-fluid"
+                                                    alt="Room Image">
+                                            </a>
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
-                        </div>
-                        <div class="col-sm-6 col-xl-3">
-                            <div class="card product-card">
-                                <div class="card-img-top">
-                                    <a href="ecom_product-details.html"><img
-                                            src="../assets/images/application/img-prod-3.jpg" alt="image"
-                                            class="img-prod img-fluid" /></a>
-
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-sm-6 col-xl-3">
-                            <div class="card product-card">
-                                <div class="card-img-top">
-                                    <a href="ecom_product-details.html"><img
-                                            src="../assets/images/application/img-prod-4.jpg" alt="image"
-                                            class="img-prod img-fluid" /></a>
-
-                                </div>
-
-                            </div>
-                        </div>
+                            @endforeach
+                        @endif
                     </div>
                 </div>
             </div>

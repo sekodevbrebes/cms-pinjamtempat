@@ -43,7 +43,7 @@
                                                         <?php $images = json_decode($room->image); ?>
                                                         @if (count($images) > 0)
                                                             <img src="{{ asset('storage/' . $images[0]) }}" alt="Room Image"
-                                                                class="wid-50 rounded" height="50">
+                                                                class="wid-100 rounded" height="100">
                                                         @endif
                                                     @endif
                                                 </div>

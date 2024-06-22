@@ -18,7 +18,7 @@
                                     <label class="form-label">Room Name</label>
                                     <input name="name" type="text"
                                         class="form-control @error('name') is-invalid @enderror"
-                                        placeholder="Enter room name" />
+                                        placeholder="Enter room name" value="{{ old('name') }}" />
                                     @error('name')
                                         <div class="invalid-feedback">{{ $message }}</div>
                                     @enderror
@@ -30,7 +30,7 @@
                                     <label class="form-label">Location</label>
                                     <input name="location" type="text"
                                         class="form-control @error('location') is-invalid @enderror"
-                                        placeholder="Enter location" />
+                                        placeholder="Enter location" value="{{ old('location') }}" />
                                     @error('location')
                                         <div class="invalid-feedback">{{ $message }}</div>
                                     @enderror
@@ -40,9 +40,9 @@
                             <div class="col-md-6">
                                 <div class="mb-3">
                                     <label class="form-label">Capacity</label>
-                                    <input name="capacity" type="text"
+                                    <input name="capacity" type="number"
                                         class="form-control @error('capacity') is-invalid @enderror"
-                                        placeholder="Enter capacity" />
+                                        placeholder="Enter capacity" value="{{ old('capacity') }}" />
                                     @error('capacity')
                                         <div class="invalid-feedback">{{ $message }}</div>
                                     @enderror
@@ -53,7 +53,8 @@
                                 <div class="mb-3">
                                     <label class="form-label">Rate</label>
                                     <input name="rate" type="text"
-                                        class="form-control @error('rate') is-invalid @enderror" placeholder="Enter rate" />
+                                        class="form-control @error('rate') is-invalid @enderror" placeholder="Enter rate"
+                                        value="{{ old('rate') }}" />
                                     @error('rate')
                                         <div class="invalid-feedback">{{ $message }}</div>
                                     @enderror
@@ -63,7 +64,7 @@
                             <div class="col-md-12">
                                 <div class="mb-3">
                                     <label class="form-label">Facility</label>
-                                    <textarea name="facility" id="classic-editor" class="form-control"></textarea>
+                                    <textarea name="facility" id="classic-editor" class="form-control">{{ old('facility') }}</textarea>
                                     @error('facility')
                                         <div class="invalid-feedback">{{ $message }}</div>
                                     @enderror
@@ -73,8 +74,9 @@
                             <div class="col-md-12">
                                 <div class="mb-3">
                                     <label class="form-label">Image</label>
-                                    <div id="dropzone" class="dropzone"></div>
-                                    <input name="image[]" type="file" multiple="multiple" />
+                                    {{-- <div id="dropzone" class="dropzone"></div> --}}
+                                    <input name="image[]" type="file" multiple="multiple"
+                                        class="form-control @error('image') is-invalid @enderror" />
                                 </div>
                             </div>
 
@@ -88,7 +90,7 @@
         </div>
     </div>
 
-    <script>
+    {{-- <script>
         document.addEventListener('DOMContentLoaded', function() {
             let dropzone = new Dropzone("#dropzone", {
                 url: "{{ route('rooms.store') }}",
@@ -105,5 +107,5 @@
                 }
             });
         });
-    </script>
+    </script> --}}
 @endsection
