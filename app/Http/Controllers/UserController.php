@@ -43,9 +43,8 @@ class UserController extends Controller
      */
     public function store(StoreUserRequest $request)
     {
+        
         $data = $request->all();
-
-        // $data['image'] = $request->file('image')->store('assets/images/', 'public');
 
         // upload process here
         $path = public_path('app/public/assets/image-user');

@@ -20,6 +20,9 @@
     <link rel="stylesheet" href="{{ asset('assets/css/plugins/dataTables.bootstrap5.min.css') }}" />
     <!-- [Page specific CSS] end -->
 
+    <!-- fileupload-custom css -->
+    <link rel="stylesheet" href="{{ asset('/assets/css/plugins/dropzone.min.css') }}" />
+
     <!-- [phosphor Icons] https://phosphoricons.com/ -->
     <link rel="stylesheet" href="{{ asset('/assets/fonts/phosphor/duotone/style.css') }}">
     <!-- [Tabler Icons] https://tablericons.com -->
@@ -36,13 +39,16 @@
     <link rel="stylesheet" href="{{ asset('/assets/css/style.css') }}" id="main-style-link">
     <link rel="stylesheet" href="{{ asset('/assets/css/style-preset.css') }}">
 
+
+
 </head>
 <!-- [Head] end -->
 
 <!-- [Body] Start -->
 
 <body data-pc-preset="preset-1" data-pc-sidebar-caption="true" data-pc-layout="vertical" data-pc-direction="ltr"
-    data-pc-theme_contrast="" data-pc-theme="light"><!-- [ Pre-loader ] start -->
+    data-pc-theme_contrast="" data-pc-theme="light">
+    <!-- [ Pre-loader ] start -->
     <div class="page-loader">
         <div class="bar"></div>
     </div>
@@ -100,6 +106,10 @@
     <script src="{{ asset('/assets/js/fonts/custom-font.js') }}"></script>
     <script src="{{ asset('/assets/js/pcoded.js') }}"></script>
     <script src="{{ asset('/assets/js/plugins/feather.min.js') }}"></script>
+
+    <!-- [Page Specific JS] start --><!-- file-upload Js -->
+    <script src="{{ asset('/assets/js/plugins/dropzone-amd-module.min.js') }}"></script>
+
     <!-- [Page Specific JS] start -->
 
     <!-- datatable Js -->
@@ -115,6 +125,21 @@
             perPage: 5,
         });
     </script>
+
+
+
+    <!-- [Page Specific JS] start --><!-- Ckeditor js -->
+    <script src="{{ asset('/assets/js/plugins/ckeditor/classic/ckeditor.js') }}"></script>
+    <script>
+        (function() {
+            ClassicEditor.create(document.querySelector("#classic-editor")).catch(
+                (error) => {
+                    console.error(error);
+                }
+            );
+        })();
+    </script>
+    <!-- [Page Specific JS] end -->
 
 
     {{-- <script>

@@ -46,8 +46,6 @@
                                                         <img src="{{ asset('storage/assets/image-user/profil-kosong.jpg') }}"
                                                             alt="Photo Profile" class="wid-40 rounded-circle" />
                                                     @endif
-                                                    {{-- <img src="../assets/images/user/avatar-1.jpg" alt="user-image"
-                                                        class="wid-40 rounded-circle" /> --}}
 
                                                 </div>
                                                 <div class="col">

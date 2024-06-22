@@ -37,14 +37,16 @@
                 {{-- <li class="pc-item pc-caption"><label>Widget</label> <svg class="pc-icon">
                         <use xlink:href="#custom-presentation-chart"></use>
                     </svg></li> --}}
+                <li class="pc-item">
+                    <a href="{{ route('rooms.index') }}" class="pc-link"><span class="pc-micon"><svg class="pc-icon">
+                                <use xlink:href="#custom-fatrows"></use>
+                            </svg> </span><span class="pc-mtext">Tempat</span></a>
+                </li>
                 <li class="pc-item"><a href="{{ route('users.index') }}" class="pc-link"><span class="pc-micon">
                             <svg class="pc-icon">
                                 <use xlink:href="#custom-user-square"></use>
                             </svg> </span><span class="pc-mtext">Users</span></a></li>
-                <li class="pc-item"><a href="../widget/w_data.html" class="pc-link"><span class="pc-micon"><svg
-                                class="pc-icon">
-                                <use xlink:href="#custom-fatrows"></use>
-                            </svg> </span><span class="pc-mtext">Data</span></a></li>
+
                 <li class="pc-item"><a href="../widget/w_chart.html" class="pc-link"><span class="pc-micon"><svg
                                 class="pc-icon">
                                 <use xlink:href="#custom-presentation-chart"></use>
