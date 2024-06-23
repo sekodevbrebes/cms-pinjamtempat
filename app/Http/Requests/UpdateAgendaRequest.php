@@ -1,17 +1,17 @@
 <?php
 
-namespace App\Http\Requests\Room;
+namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class UpdateRoomRequest extends FormRequest
+class UpdateAgendaRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
      */
     public function authorize(): bool
     {
-        return true;
+        return false;
     }
 
     /**
@@ -22,12 +22,7 @@ class UpdateRoomRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'required',
-            'location' => 'required',
-            'capacity' => 'required',
-            'rate' => 'required',
-            'facility' => 'required',
-            'image' => 'nullable'
+            //
         ];
     }
 }

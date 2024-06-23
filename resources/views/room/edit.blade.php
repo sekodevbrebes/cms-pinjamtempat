@@ -10,7 +10,8 @@
                     <h5 class="mb-0">@yield('title')</h5>
                 </div>
                 <div class="card-body">
-                    <form action="{{ route('rooms.update') }}" method="POST" enctype="multipart/form-data" id="room-form">
+                    <form action="{{ route('rooms.update', $room->id) }}" method="POST" enctype="multipart/form-data"
+                        id="room-form">
                         @csrf
                         @method('PUT')
                         <div class="row">
@@ -19,7 +20,7 @@
                                     <label class="form-label">Room Name</label>
                                     <input name="name" type="text"
                                         class="form-control @error('name') is-invalid @enderror"
-                                        placeholder="Enter room name" value="{{ old('name') }}" />
+                                        placeholder="Enter room name" value="{{ old('name', $room->name) }}" />
                                     @error('name')
                                         <div class="form-text text-danger">{{ $message }}</div>
                                     @enderror
@@ -31,7 +32,7 @@
                                     <label class="form-label">Location</label>
                                     <input name="location" type="text"
                                         class="form-control @error('location') is-invalid @enderror"
-                                        placeholder="Enter location" value="{{ old('location') }}" />
+                                        placeholder="Enter location" value="{{ old('location', $room->location) }}" />
                                     @error('location')
                                         <div class="form-text text-danger">{{ $message }}</div>
                                     @enderror
@@ -43,7 +44,7 @@
                                     <label class="form-label">Capacity</label>
                                     <input name="capacity" type="number"
                                         class="form-control @error('capacity') is-invalid @enderror"
-                                        placeholder="Enter capacity" value="{{ old('capacity') }}" />
+                                        placeholder="Enter capacity" value="{{ old('capacity', $room->capacity) }}" />
                                     @error('capacity')
                                         <div class="form-text text-danger">{{ $message }}</div>
                                     @enderror
@@ -55,7 +56,7 @@
                                     <label class="form-label">Rate</label>
                                     <input name="rate" type="text"
                                         class="form-control @error('rate') is-invalid @enderror" placeholder="Enter rate"
-                                        value="{{ old('rate') }}" />
+                                        value="{{ old('rate', $room->rate) }}" />
                                     @error('rate')
                                         <div class="form-text text-danger">{{ $message }}</div>
                                     @enderror
@@ -65,7 +66,7 @@
                             <div class="col-md-12">
                                 <div class="mb-3">
                                     <label class="form-label">Facility</label>
-                                    <textarea name="facility" id="classic-editor" class="form-control">{{ old('facility') }}</textarea>
+                                    <textarea name="facility" id="classic-editor" class="form-control">{{ old('facility', $room->facility) }}</textarea>
                                     @error('facility')
                                         <div class="form-text text-danger">{{ $message }}</div>
                                     @enderror

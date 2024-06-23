@@ -71,12 +71,10 @@
                                                 </li>
                                                 <li class="list-inline-item align-bottom" data-bs-toggle="tooltip"
                                                     title="Edit">
-                                                    <a href="ecom_product-add.html"
+                                                    <a href="{{ route('rooms.edit', $room->id) }}"
                                                         class="avtar avtar-xs btn-link-success btn-pc-default"><i
                                                             class="ti ti-edit-circle f-18"></i></a>
                                                 </li>
-
-
 
                                                 <li class="list-inline-item align-bottom" data-bs-toggle="tooltip"
                                                     title="Delete">

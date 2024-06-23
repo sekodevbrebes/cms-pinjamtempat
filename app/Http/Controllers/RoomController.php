@@ -69,8 +69,6 @@ class RoomController extends Controller
      */
     public function show(Room $room)
     {
-      
-        
         return view('room.show',[
             'room' => $room
         ]);
@@ -81,16 +79,46 @@ class RoomController extends Controller
      */
     public function edit(Room $room)
     {
-        //
+        return view('room.edit',[
+            'room' => $room
+        ]);
     }
 
     /**
      * Update the specified resource in storage.
      */
     public function update(UpdateRoomRequest $request, Room $room)
-    {
-        //
+{
+    $data = $request->all();
+
+    // Check if an image is uploaded
+    if ($request->hasFile('image')) {
+        // First, get the old image to delete it from storage
+        $oldImage = $room->image;
+
+        // Store the new image in the desired location
+        $data['image'] = $request->file('image')->store(
+            'assets/image-room', 'public'
+        );
+
+        // Delete the old image from storage if it exists
+        $oldImagePath = 'storage/' . $oldImage;
+        if (File::exists($oldImagePath)) {
+            File::delete($oldImagePath);
+        } else {
+            File::delete('storage/app/public/' . $oldImage);
+        }
+    } else {
+        // If no new image is uploaded, retain the old image data
+        unset($data['image']);
     }
+
+    // Update the room with the modified data
+    $room->update($data);
+
+    // Return a response or redirect as needed
+    return redirect()->route('rooms.index')->with('success', 'Room updated successfully.');
+}
 
     /**
      * Remove the specified resource from storage.
