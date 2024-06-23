@@ -22,7 +22,12 @@ class StoreRoomRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'name' => 'required',
+            'location' => 'required',
+            'capacity' => 'required',
+            'rate' => 'required',
+            'facility' => 'required',
+            'image' => 'required'
         ];
     }
 }

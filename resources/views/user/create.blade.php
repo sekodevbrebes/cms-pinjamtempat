@@ -56,7 +56,7 @@
                                     <input id="password_confirmation" name="password_confirmation" type="password"
                                         class="form-control  @error('password_confirmation') is-invalid @enderror"
                                         placeholder="Enter confirm password" />
-                                    @error('password_confirmation')
+                                    @error('password')
                                         <div class="form-text text-danger">{{ $message }}</div>
                                     @enderror
                                 </div>

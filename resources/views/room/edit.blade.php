@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Tambah Ruang/Tempat')
+@section('title', 'Edit Ruang/Tempat')
 
 @section('contents')
     <div class="row">
@@ -10,8 +10,9 @@
                     <h5 class="mb-0">@yield('title')</h5>
                 </div>
                 <div class="card-body">
-                    <form action="{{ route('rooms.store') }}" method="POST" enctype="multipart/form-data" id="room-form">
+                    <form action="{{ route('rooms.update') }}" method="POST" enctype="multipart/form-data" id="room-form">
                         @csrf
+                        @method('PUT')
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="mb-3">

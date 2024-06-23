@@ -18,6 +18,11 @@ class RoomController extends Controller
     public function index()
     {
         $room = Room::all();
+
+        $title = 'Delete Room!';
+        $text = "Are you sure you want to delete?";
+        confirmDelete($title, $text);
+
         return view('room.index', [
             'rooms' => $room
         ]);
@@ -56,7 +61,7 @@ class RoomController extends Controller
     
         Room::create($data);
 
-        return redirect('rooms')->with('success', 'Room Created Successfully!');
+        return redirect('rooms');
     }
 
     /**
@@ -92,6 +97,18 @@ class RoomController extends Controller
      */
     public function destroy(Room $room)
     {
-        //
+          // first checking old file to delete from storage
+          $get_item = $room['image'];
+
+          $data = 'storage/'.$get_item;
+          if (File::exists($data)) {
+              File::delete($data);
+          }else{
+              File::delete('storage/app/public/'.$get_item);
+          }
+  
+          $room->forceDelete();
+  
+          return redirect()->route('rooms.index')->with('success', 'Room deleted successfully.');
     }
 }

@@ -75,11 +75,15 @@
                                                         class="avtar avtar-xs btn-link-success btn-pc-default"><i
                                                             class="ti ti-edit-circle f-18"></i></a>
                                                 </li>
+
+
+
                                                 <li class="list-inline-item align-bottom" data-bs-toggle="tooltip"
                                                     title="Delete">
-                                                    <a href="#"
-                                                        class="avtar avtar-xs btn-link-danger btn-pc-default"><i
-                                                            class="ti ti-trash f-18"></i></a>
+
+                                                    <a href="{{ route('rooms.destroy', $room->id) }}"
+                                                        class="avtar avtar-xs btn-link-danger btn-pc-default"
+                                                        data-confirm-delete="true"><i class="ti ti-trash f-18"></i></a>
                                                 </li>
                                             </ul>
                                         </td>
