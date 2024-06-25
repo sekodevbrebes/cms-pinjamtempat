@@ -7,25 +7,21 @@
         <div class="navbar-content">
             <ul class="pc-navbar">
                 <li class="pc-item pc-caption"><label>Navigation</label></li>
-                {{-- <li class="pc-item pc-hasmenu"><a href="#!" class="pc-link">
+                <li class="pc-item"><a href="{{ route('dashboard.index') }}" class="pc-link">
                         <span class="pc-micon"><svg class="pc-icon">
                                 <use xlink:href="#custom-status-up"></use>
-                            </svg> </span><span class="pc-mtext">Dashboard</span> <span class="pc-arrow"><i
-                                data-feather="chevron-right"></i></span> </a>
-                    <ul class="pc-submenu">
-                        <li class="pc-item"><a class="pc-link" href="../dashboard/index.html">Default</a></li>
-
-                    </ul>
-                </li> --}}
-
-                <li class="pc-item pc-hasmenu"><a href="#!" class="pc-link">
-                        <span class="pc-micon"><svg class="pc-icon">
-                                <use xlink:href="#custom-document"></use>
-                            </svg> </span><span class="pc-mtext">Agenda</span>
-                        </span>
+                            </svg> </span><span class="pc-mtext">Dashboard</span>
                     </a>
 
                 </li>
+
+                <li class="pc-item">
+                    <a href="{{ route('agenda.index') }}" class="pc-link"><span class="pc-micon"><svg class="pc-icon">
+                                <use xlink:href="#custom-fatrows"></use>
+                            </svg> </span><span class="pc-mtext">Agenda</span></a>
+                </li>
+
+
 
                 {{-- <li class="pc-item pc-caption"><label>Widget</label> <svg class="pc-icon">
                         <use xlink:href="#custom-presentation-chart"></use>

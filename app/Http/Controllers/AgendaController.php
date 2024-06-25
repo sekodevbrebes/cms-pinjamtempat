@@ -13,7 +13,26 @@ class AgendaController extends Controller
      */
     public function index()
     {
-        //
+        // Ambil data Agenda yang memiliki status Pending, Approved, atau Cancelled
+        $data = Agenda::whereIn('status', ['Pending', 'Approved', 'Cancelled'])
+                      ->with(['room', 'user']) // Menggunakan eager loading untuk memuat relasi room dan user
+                      ->get();
+        
+        // Menghitung jumlah record berdasarkan masing-masing status
+        $pendingCount = Agenda::where('status', 'Pending')->count();
+        $approvedCount = Agenda::where('status', 'Approved')->count();
+        $cancelledCount = Agenda::where('status', 'Cancelled')->count();
+
+        // Menghitung jumlah total record
+        $totalCount = Agenda::whereIn('status', ['Pending', 'Approved', 'Cancelled'])->count();
+        
+        return view('agenda.index', [
+            'agenda' => $data,
+            'pendingCount' => $pendingCount,
+            'approvedCount' => $approvedCount,
+            'cancelledCount' => $cancelledCount,
+            'totalCount' => $totalCount,
+        ]);
     }
 
     /**

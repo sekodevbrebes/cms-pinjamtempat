@@ -55,7 +55,7 @@
 <!-- [Head] start -->
 
 <head>
-    <title>Login | Able Pro Dashboard Template</title><!-- [Meta] -->
+    <title>Login | Si KPT</title><!-- [Meta] -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0,minimal-ui">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -105,7 +105,7 @@
                             <div class="mb-4">
                                 <input type="email" name="email" value="{{ old('email') }}"
                                     class="form-control @error('email') is-invalid @enderror" id="floatingInput"
-                                    placeholder="Email Address">
+                                    placeholder="Email Address" autofocus>
                                 @error('email')
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror

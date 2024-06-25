@@ -13,6 +13,15 @@ return new class extends Migration
     {
         Schema::create('agendas', function (Blueprint $table) {
             $table->id();
+            $table->date('tanggal');
+            $table->time('waktu_mulai');
+            $table->time('waktu_selesai');
+            $table->foreignId('room_id')->constrained('rooms')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreignId('user_id')->constrained('users')->onDelete('cascade')->onUpdate('cascade');
+            $table->enum('status', ['Pending', 'Approved','Cancelled'])->default('Pending');
+            $table->longText('activities');
+
+            $table->softDeletes();
             $table->timestamps();
         });
     }

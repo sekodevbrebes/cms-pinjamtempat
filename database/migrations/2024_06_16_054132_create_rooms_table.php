@@ -16,8 +16,8 @@ return new class extends Migration
             $table->string('name');
             $table->string('location');
             $table->integer('capacity');
-            $table->string('facility');
-            $table->string('image');
+            $table->longText('facility');
+            $table->longText('image');
             $table->double('rate')->nullable();
 
             $table->softDeletes();

@@ -117,6 +117,8 @@
     <script src="{{ asset('/assets/js/plugins/dataTables.min.js') }}"></script>
     <script src="{{ asset('/assets/js/plugins/dataTables.bootstrap5.min.js') }}"></script>
 
+    <script src="{{ asset('/assets/js/pages/invoice-list.js') }}"></script>
+
     <!-- [Page Specific JS] start -->
     <script src="{{ asset('/assets/js/plugins/simple-datatables.js') }}"></script>
     <script>
