@@ -22,6 +22,8 @@ class AgendaSeeder extends Seeder
             'user_id' => 2, // Sesuaikan dengan ID yang ada di tabel users
             'status' => 'Pending',
             'activities' => 'Rapat bulanan tim A',
+            'reason' => '',
+            'peserta' => 100,
             'created_at' => now(),
             'updated_at' => now(),
         ],
@@ -31,8 +33,10 @@ class AgendaSeeder extends Seeder
             'waktu_selesai' => '12:00:00',
             'room_id' => 5, // Sesuaikan dengan ID yang ada di tabel rooms
             'user_id' => 2, // Sesuaikan dengan ID yang ada di tabel users
-            'status' => 'Approved',
+            'status' => 'Accept',
             'activities' => 'Presentasi proyek X',
+            'reason' => '',
+            'peserta' => 75,
             'created_at' => now(),
             'updated_at' => now(),
         ],
@@ -42,8 +46,10 @@ class AgendaSeeder extends Seeder
             'waktu_selesai' => '14:00:00',
             'room_id' => 1, // Sesuaikan dengan ID yang ada di tabel rooms
             'user_id' => 3, // Sesuaikan dengan ID yang ada di tabel users
-            'status' => 'Pending',
+            'status' => 'Accept',
             'activities' => 'Workshop pengembangan diri',
+            'reason' => '',
+            'peserta' => 100,
             'created_at' => now(),
             'updated_at' => now(),
         ],
@@ -53,8 +59,10 @@ class AgendaSeeder extends Seeder
             'waktu_selesai' => '16:00:00',
             'room_id' => 3, // Sesuaikan dengan ID yang ada di tabel rooms
             'user_id' => 3, // Sesuaikan dengan ID yang ada di tabel users
-            'status' => 'Approved',
+            'status' => 'Accept',
             'activities' => 'Training keamanan kerja',
+            'reason' => '',
+            'peserta' => 100,
             'created_at' => now(),
             'updated_at' => now(),
         ],
@@ -66,6 +74,8 @@ class AgendaSeeder extends Seeder
             'user_id' => 3, // Sesuaikan dengan ID yang ada di tabel users
             'status' => 'Pending',
             'activities' => 'Rapat evaluasi bulanan',
+            'reason' => '',
+            'peserta' => 50,
             'created_at' => now(),
             'updated_at' => now(),
         ],

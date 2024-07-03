@@ -86,10 +86,8 @@
                                 <div class="col-sm-6 col-xl-3">
                                     <div class="card product-card">
                                         <div class="card-img-top">
-                                            <a href="ecom_product-details.html">
-                                                <img src="{{ asset('storage/' . $image) }}" class="img-prod img-fluid"
-                                                    alt="Room Image">
-                                            </a>
+                                            <img src="{{ asset('storage/' . $image) }}" class="img-prod img-fluid"
+                                                alt="Room Image">
                                         </div>
                                     </div>
                                 </div>

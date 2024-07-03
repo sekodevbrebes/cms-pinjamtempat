@@ -29,7 +29,8 @@
                                 data-bs-target="#analytics-tab-3-pane" type="button" role="tab"
                                 aria-controls="analytics-tab-3-pane" aria-selected="false">
                                 <span class="d-flex align-items-center gap-2">In Progress
-                                    <span class="avtar rounded-circle bg-light-warning">{{ $approvedCount }}</span></span>
+                                    <span
+                                        class="avtar rounded-circle bg-light-warning">{{ $approvedFutureCount }}</span></span>
                             </button>
                         </li>
                         <li class="nav-item" role="presentation">
@@ -38,6 +39,23 @@
                                 aria-controls="analytics-tab-4-pane" aria-selected="false">
                                 <span class="d-flex align-items-center gap-2">Cancelled
                                     <span class="avtar rounded-circle bg-light-danger">{{ $cancelledCount }}</span></span>
+                            </button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="analytics-tab-6" data-bs-toggle="tab"
+                                data-bs-target="#analytics-tab-6-pane" type="button" role="tab"
+                                aria-controls="analytics-tab-6-pane" aria-selected="false">
+                                <span class="d-flex align-items-center gap-2">Decline
+                                    <span class="avtar rounded-circle bg-light-info">{{ $declineCount }}</span></span>
+                            </button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="analytics-tab-5" data-bs-toggle="tab"
+                                data-bs-target="#analytics-tab-5-pane" type="button" role="tab"
+                                aria-controls="analytics-tab-5-pane" aria-selected="false">
+                                <span class="d-flex align-items-center gap-2">Finish
+                                    <span
+                                        class="avtar rounded-circle bg-light-secondary">{{ $approvedPastCount }}</span></span>
                             </button>
                         </li>
                     </ul>
@@ -89,7 +107,7 @@
                                                     </div>
                                                 </td>
                                                 <td>{{ $item->room->name }}</td>
-                                                <td>{{ $item->tanggal }}</td>
+                                                <td>{{ \Carbon\Carbon::parse($item->tanggal)->locale('id')->translatedFormat('l, d F Y') }}
                                                 <td>{{ $item->waktu_mulai }} - {{ $item->waktu_selesai }}</td>
                                                 <td>
                                                     @php
@@ -98,11 +116,11 @@
                                                             case 'Cancelled':
                                                                 $statusClass = 'bg-light-danger';
                                                                 break;
-                                                            case 'Approved':
-                                                                $statusClass = 'bg-light-success';
+                                                            case 'Accept':
+                                                                $statusClass = 'bg-light-primary';
                                                                 break;
                                                             case 'Pending':
-                                                                $statusClass = 'bg-light-info';
+                                                                $statusClass = 'bg-light-warning';
                                                                 break;
                                                             default:
                                                                 $statusClass = 'bg-light-secondary'; // default class jika status tidak dikenali
@@ -115,16 +133,16 @@
                                                     <ul class="list-inline mb-0">
                                                         <li class="list-inline-item" data-bs-toggle="tooltip"
                                                             title="View">
-                                                            <a href=""
+                                                            <a href="{{ route('agenda.show', $item->id) }}"
                                                                 class="avtar avtar-s btn-link-info btn-pc-default"><i
                                                                     class="ti ti-eye f-20"></i></a>
                                                         </li>
-                                                        <li class="list-inline-item" data-bs-toggle="tooltip"
+                                                        {{-- <li class="list-inline-item" data-bs-toggle="tooltip"
                                                             title="Edit">
-                                                            <a href="#"
+                                                            <a href="{{ route('agenda.show', $item->id) }}"
                                                                 class="avtar avtar-s btn-link-success btn-pc-default"><i
                                                                     class="ti ti-edit f-20"></i></a>
-                                                        </li>
+                                                        </li> --}}
                                                         <li class="list-inline-item" data-bs-toggle="tooltip"
                                                             title="Delete">
                                                             <a href="#"
@@ -189,25 +207,25 @@
                                                         </div>
                                                     </td>
                                                     <td>{{ $item->room->name }}</td>
-                                                    <td>{{ $item->tanggal }}</td>
+                                                    <td>{{ \Carbon\Carbon::parse($item->tanggal)->locale('id')->translatedFormat('l, d F Y') }}
                                                     <td>{{ $item->waktu_mulai }} - {{ $item->waktu_selesai }}</td>
                                                     <td>
-                                                        <span class="badge bg-light-info">{{ $item->status }}</span>
+                                                        <span class="badge bg-light-warning">{{ $item->status }}</span>
                                                     </td>
                                                     <td class="text-end">
                                                         <ul class="list-inline mb-0">
                                                             <li class="list-inline-item" data-bs-toggle="tooltip"
                                                                 title="View">
-                                                                <a href=""
+                                                                <a href="{{ route('agenda.show', $item->id) }}"
                                                                     class="avtar avtar-s btn-link-info btn-pc-default"><i
                                                                         class="ti ti-eye f-20"></i></a>
                                                             </li>
-                                                            <li class="list-inline-item" data-bs-toggle="tooltip"
+                                                            {{-- <li class="list-inline-item" data-bs-toggle="tooltip"
                                                                 title="Edit">
                                                                 <a href="#"
                                                                     class="avtar avtar-s btn-link-success btn-pc-default"><i
                                                                         class="ti ti-edit f-20"></i></a>
-                                                            </li>
+                                                            </li> --}}
                                                             <li class="list-inline-item" data-bs-toggle="tooltip"
                                                                 title="Delete">
                                                                 <a href="#"
@@ -245,8 +263,8 @@
                                         @php
                                             $counter = 1; // Inisialisasi counter untuk nomor urut
                                         @endphp
-                                        @foreach ($agenda as $item)
-                                            @if ($item->status === 'Approved')
+                                        @foreach ($dataFuture as $item)
+                                            @if ($item->status === 'Accept')
                                                 <tr>
                                                     {{-- <td>{{ $loop->iteration }}</td> --}}
                                                     <td>{{ $counter }}</td>
@@ -279,25 +297,25 @@
                                                         </div>
                                                     </td>
                                                     <td>{{ $item->room->name }}</td>
-                                                    <td>{{ $item->tanggal }}</td>
+                                                    <td>{{ \Carbon\Carbon::parse($item->tanggal)->locale('id')->translatedFormat('l, d F Y') }}
                                                     <td>{{ $item->waktu_mulai }} - {{ $item->waktu_selesai }}</td>
                                                     <td>
-                                                        <span class="badge bg-light-success">{{ $item->status }}</span>
+                                                        <span class="badge bg-light-primary">{{ $item->status }}</span>
                                                     </td>
                                                     <td class="text-end">
                                                         <ul class="list-inline mb-0">
                                                             <li class="list-inline-item" data-bs-toggle="tooltip"
                                                                 title="View">
-                                                                <a href=""
+                                                                <a href="{{ route('agenda.show', $item->id) }}"
                                                                     class="avtar avtar-s btn-link-info btn-pc-default"><i
                                                                         class="ti ti-eye f-20"></i></a>
                                                             </li>
-                                                            <li class="list-inline-item" data-bs-toggle="tooltip"
+                                                            {{-- <li class="list-inline-item" data-bs-toggle="tooltip"
                                                                 title="Edit">
                                                                 <a href="#"
                                                                     class="avtar avtar-s btn-link-success btn-pc-default"><i
                                                                         class="ti ti-edit f-20"></i></a>
-                                                            </li>
+                                                            </li> --}}
                                                             <li class="list-inline-item" data-bs-toggle="tooltip"
                                                                 title="Delete">
                                                                 <a href="#"
@@ -368,7 +386,9 @@
                                                         </div>
                                                     </td>
                                                     <td>{{ $item->room->name }}</td>
-                                                    <td>{{ $item->tanggal }}</td>
+                                                    {{-- <td>{{ $item->tanggal }}</td> --}}
+                                                    <td>{{ \Carbon\Carbon::parse($item->tanggal)->locale('id')->translatedFormat('l, d F Y') }}
+                                                    </td>
                                                     <td>{{ $item->waktu_mulai }} - {{ $item->waktu_selesai }}</td>
                                                     <td>
                                                         <span class="badge bg-light-danger">{{ $item->status }}</span>
@@ -377,16 +397,16 @@
                                                         <ul class="list-inline mb-0">
                                                             <li class="list-inline-item" data-bs-toggle="tooltip"
                                                                 title="View">
-                                                                <a href=""
+                                                                <a href="{{ route('agenda.show', $item->id) }}"
                                                                     class="avtar avtar-s btn-link-info btn-pc-default"><i
                                                                         class="ti ti-eye f-20"></i></a>
                                                             </li>
-                                                            <li class="list-inline-item" data-bs-toggle="tooltip"
+                                                            {{-- <li class="list-inline-item" data-bs-toggle="tooltip"
                                                                 title="Edit">
                                                                 <a href="#"
                                                                     class="avtar avtar-s btn-link-success btn-pc-default"><i
                                                                         class="ti ti-edit f-20"></i></a>
-                                                            </li>
+                                                            </li> --}}
                                                             <li class="list-inline-item" data-bs-toggle="tooltip"
                                                                 title="Delete">
                                                                 <a href="#"
@@ -395,6 +415,137 @@
                                                             </li>
                                                         </ul>
                                                     </td>
+                                                </tr>
+                                                @php
+                                                    $counter++; // Increment counter setelah satu data ditampilkan
+                                                @endphp
+                                            @endif
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="analytics-tab-6-pane" role="tabpanel"
+                            aria-labelledby="analytics-tab-6" tabindex="0">
+                            <div class="table-responsive">
+                                <table class="table table-hover" id="pc-dt-simple-6">
+                                    <thead>
+                                        <tr>
+                                            <th>#</th>
+                                            <th>User Name</th>
+                                            <th>Room</th>
+                                            <th>Create Date</th>
+                                            <th>Time</th>
+                                            <th>Activity</th>
+                                            <th>Information</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @php
+                                            $counter = 1; // Inisialisasi counter untuk nomor urut
+                                        @endphp
+                                        @foreach ($agenda as $item)
+                                            @if ($item->status === 'Decline')
+                                                <tr>
+                                                    <td>{{ $counter }}</td>
+                                                    <td>
+                                                        <div class="row align-items-center">
+                                                            <div class="col-auto pe-0">
+                                                                @if ($item->user->image)
+                                                                    <img src="{{ asset('storage/' . $item->user->image) }}"
+                                                                        alt="{{ $item->image }}" height="40"
+                                                                        class="wid-40 rounded-circle" />
+                                                                @else
+                                                                    <img src="{{ asset('storage/assets/image-user/profil-kosong.jpg') }}"
+                                                                        alt="Photo Profile"
+                                                                        class="wid-40 rounded-circle" />
+                                                                @endif
+                                                            </div>
+                                                            <div class="col">
+                                                                <h6 class="mb-1">
+                                                                    <span
+                                                                        class="text-truncate w-100">{{ $item->user->name }}</span>
+                                                                </h6>
+                                                                <p class="f-12 mb-0">
+                                                                    <a href="#!" class="text-muted"><span
+                                                                            class="text-truncate w-100"><span
+                                                                                class="__cf_email__"
+                                                                                data-cfemail="d5b8b8a6bda1e7e695b2b8b4bcb9fbb6bab8">
+                                                                                {{ $item->user->instansi }}</span></span></a>
+                                                                </p>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                    <td>{{ $item->room->name }}</td>
+                                                    <td>{{ \Carbon\Carbon::parse($item->tanggal)->locale('id')->translatedFormat('l, d F Y') }}
+                                                    <td>{{ $item->waktu_mulai }} - {{ $item->waktu_selesai }}</td>
+                                                    <td>{{ $item->activities }}</td>
+                                                    <td>{{ $item->reason }}</td>c
+                                                </tr>
+                                                @php
+                                                    $counter++; // Increment counter setelah satu data ditampilkan
+                                                @endphp
+                                            @endif
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="analytics-tab-5-pane" role="tabpanel"
+                            aria-labelledby="analytics-tab-5" tabindex="0">
+                            <div class="table-responsive">
+                                <table class="table table-hover" id="pc-dt-simple-5">
+                                    <thead>
+                                        <tr>
+                                            <th>#</th>
+                                            <th>User Name</th>
+                                            <th>Room</th>
+                                            <th>Create Date</th>
+                                            <th>Time</th>
+                                            <th>Activity</th>
+
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @php
+                                            $counter = 1; // Inisialisasi counter untuk nomor urut
+                                        @endphp
+                                        @foreach ($dataPast as $item)
+                                            @if ($item->status === 'Accept')
+                                                <tr>
+                                                    <td>{{ $counter }}</td>
+                                                    <td>
+                                                        <div class="row align-items-center">
+                                                            <div class="col-auto pe-0">
+                                                                @if ($item->user->image)
+                                                                    <img src="{{ asset('storage/' . $item->user->image) }}"
+                                                                        alt="{{ $item->image }}" height="40"
+                                                                        class="wid-40 rounded-circle" />
+                                                                @else
+                                                                    <img src="{{ asset('storage/assets/image-user/profil-kosong.jpg') }}"
+                                                                        alt="Photo Profile"
+                                                                        class="wid-40 rounded-circle" />
+                                                                @endif
+                                                            </div>
+                                                            <div class="col">
+                                                                <h6 class="mb-1">
+                                                                    <span
+                                                                        class="text-truncate w-100">{{ $item->user->name }}</span>
+                                                                </h6>
+                                                                <p class="f-12 mb-0">
+                                                                    <a href="#!" class="text-muted"><span
+                                                                            class="text-truncate w-100"><span
+                                                                                class="__cf_email__"
+                                                                                data-cfemail="d5b8b8a6bda1e7e695b2b8b4bcb9fbb6bab8">
+                                                                                {{ $item->user->instansi }}</span></span></a>
+                                                                </p>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                    <td>{{ $item->room->name }}</td>
+                                                    <td>{{ \Carbon\Carbon::parse($item->tanggal)->locale('id')->translatedFormat('l, d F Y') }}
+                                                    <td>{{ $item->waktu_mulai }} - {{ $item->waktu_selesai }}</td>
+                                                    <td>{{ $item->activities }}</td>
                                                 </tr>
                                                 @php
                                                     $counter++; // Increment counter setelah satu data ditampilkan

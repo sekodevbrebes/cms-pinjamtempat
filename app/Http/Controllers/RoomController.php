@@ -45,20 +45,20 @@ class RoomController extends Controller
 
         // upload process here
         // Proses upload gambar
-    if ($request->hasFile('image')) {
-        $image = $request->file('image');
-        $imagePaths = [];
+        if ($request->hasFile('image')) {
+            $image = $request->file('image');
+            $imagePaths = [];
 
-        foreach ($image as $img) {
-            // Simpan gambar ke dalam folder 'public/assets/image-room'
-            $path = $img->store('assets/image-room', 'public');
-            $imagePaths[] = $path;
+            foreach ($image as $img) {
+                // Simpan gambar ke dalam folder 'public/assets/image-room'
+                $path = $img->store('assets/image-room', 'public');
+                $imagePaths[] = $path;
+            }
+
+            // Simpan array path gambar ke dalam $data['images'] dalam format JSON
+            $data['image'] = json_encode($imagePaths);
         }
 
-        // Simpan array path gambar ke dalam $data['images'] dalam format JSON
-        $data['image'] = json_encode($imagePaths);
-    }
-    
         Room::create($data);
 
         return redirect('rooms');
@@ -69,7 +69,7 @@ class RoomController extends Controller
      */
     public function show(Room $room)
     {
-        return view('room.show',[
+        return view('room.show', [
             'room' => $room
         ]);
     }
@@ -79,7 +79,7 @@ class RoomController extends Controller
      */
     public function edit(Room $room)
     {
-        return view('room.edit',[
+        return view('room.edit', [
             'room' => $room
         ]);
     }
@@ -87,56 +87,59 @@ class RoomController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateRoomRequest $request, Room $room)
+    public function update(UpdateRoomRequest $request, $id)
 {
     $data = $request->all();
 
-    // Check if an image is uploaded
+    // Find the room by ID
+    $room = Room::findOrFail($id);
+
+    // Check if new images are uploaded
     if ($request->hasFile('image')) {
-        // First, get the old image to delete it from storage
-        $oldImage = $room->image;
-
-        // Store the new image in the desired location
-        $data['image'] = $request->file('image')->store(
-            'assets/image-room', 'public'
-        );
-
-        // Delete the old image from storage if it exists
-        $oldImagePath = 'storage/' . $oldImage;
-        if (File::exists($oldImagePath)) {
-            File::delete($oldImagePath);
-        } else {
-            File::delete('storage/app/public/' . $oldImage);
+        // Delete old images if they exist
+        $oldImages = json_decode($room->image, true);
+        if ($oldImages) {
+            foreach ($oldImages as $oldImage) {
+                Storage::disk('public')->delete($oldImage);
+            }
         }
-    } else {
-        // If no new image is uploaded, retain the old image data
-        unset($data['image']);
+
+        // Process new images
+        $images = $request->file('image');
+        $imagePaths = [];
+
+        foreach ($images as $img) {
+            // Store image in 'public/assets/image-room'
+            $path = $img->store('assets/image-room', 'public');
+            $imagePaths[] = $path;
+        }
+
+        // Store array of image paths in $data['images'] as JSON
+        $data['image'] = json_encode($imagePaths);
     }
 
-    // Update the room with the modified data
+    // Update room data
     $room->update($data);
 
-    // Return a response or redirect as needed
-    return redirect()->route('rooms.index')->with('success', 'Room updated successfully.');
+    return redirect('rooms')->with('success', 'Room Updated Successfully!');
 }
-
     /**
      * Remove the specified resource from storage.
      */
     public function destroy(Room $room)
     {
-          // first checking old file to delete from storage
-          $get_item = $room['image'];
+        // first checking old file to delete from storage
+        $get_item = $room['image'];
 
-          $data = 'storage/'.$get_item;
-          if (File::exists($data)) {
-              File::delete($data);
-          }else{
-              File::delete('storage/app/public/'.$get_item);
-          }
-  
-          $room->forceDelete();
-  
-          return redirect()->route('rooms.index')->with('success', 'Room deleted successfully.');
+        $data = 'storage/' . $get_item;
+        if (File::exists($data)) {
+            File::delete($data);
+        } else {
+            File::delete('storage/app/public/' . $get_item);
+        }
+
+        $room->forceDelete();
+
+        return redirect()->route('rooms.index')->with('success', 'Room deleted successfully.');
     }
 }

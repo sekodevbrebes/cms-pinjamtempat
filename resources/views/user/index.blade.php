@@ -86,7 +86,6 @@
 
                                                     <li class="list-inline-item align-bottom" data-bs-toggle="tooltip"
                                                         title="Delete">
-
                                                         <a href="{{ route('users.destroy', $item->id) }}"
                                                             data-confirm-delete="true"
                                                             class="avtar avtar-xs btn-link-danger btn-pc-default">

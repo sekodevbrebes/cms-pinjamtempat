@@ -18,9 +18,10 @@ return new class extends Migration
             $table->time('waktu_selesai');
             $table->foreignId('room_id')->constrained('rooms')->onDelete('cascade')->onUpdate('cascade');
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade')->onUpdate('cascade');
-            $table->enum('status', ['Pending', 'Approved','Cancelled'])->default('Pending');
+            $table->enum('status', ['Pending', 'Accept','Decline','Cancelled'])->default('Pending');
             $table->longText('activities');
-
+            $table->integer('peserta');
+            $table->string('reason')->nullable();
             $table->softDeletes();
             $table->timestamps();
         });

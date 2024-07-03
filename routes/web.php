@@ -23,6 +23,10 @@ Route::middleware([
 
     Route::resource('/rooms', RoomController::class);
 
+    Route::get('agenda/{id}/status/{status}', [AgendaController::class, 'changeStatus'])
+    ->name('agenda.changeStatus');
+    
+    Route::post('/agenda/{id}/update-reason', [AgendaController::class, 'updateReason'])->name('agenda.updateReason');
     Route::resource('/agenda', AgendaController::class);
 
     Route::resource('/dashboard', DashboardController::class);
