@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\User;
+use GMP;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\ValidationException;
@@ -32,7 +33,8 @@ class UserController extends Controller
 
                 // Kembalikan respons JSON dengan token dan data pengguna
                 return response()->json([
-                    'token' => $token,
+                    'token_type' => 'Bearer',
+                    'access_token' => $token,
                     'message' => 'Login berhasil',
                     'user' => $user
                 ]);
@@ -79,7 +81,8 @@ class UserController extends Controller
 
             // Kembalikan respons JSON dengan token dan data pengguna baru
             return response()->json([
-                'token' => $token,
+                'token_type' => 'Bearer',
+                'access_token' => $token,
                 'message' => 'Registrasi berhasil',
                 'user' => $user, // Mengembalikan user yang telah terdaftar, agar dapat diisi data lain sesuai kebutuhan
             ], 201);
@@ -158,8 +161,8 @@ class UserController extends Controller
         // Jika ada file gambar yang diunggah
         if ($request->hasFile('image')) {
             // Simpan gambar ke direktori 'public/users'
-            $user->image = $request->file('image')->store('users', 'public');
-            $user->save(); // Simpan nama file gambar ke database
+            $user->image = $request->file('image')->store('assets/image-user', 'public');
+            $user->update(); // Simpan nama file gambar ke database
         }
 
         // Kembalikan respons JSON dengan pesan sukses dan data pengguna yang diperbarui
