@@ -65,6 +65,8 @@
 
                             <p>Capacity: Maksimal {{ $room->capacity }} Orang</p>
 
+                            <p>Category: {{ $room->type }}</p>
+
                             <h5 class="mt-4 mb-3 f-w-500">Facility</h5>
 
                             {!! $room->facility !!}

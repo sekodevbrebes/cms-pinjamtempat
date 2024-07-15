@@ -52,10 +52,24 @@
                             <div class="col-md-6">
                                 <div class="mb-3">
                                     <label class="form-label">Rate</label>
-                                    <input name="rate" type="text"
+                                    <input name="rate" type="number" min="1" max="5"
                                         class="form-control @error('rate') is-invalid @enderror" placeholder="Enter rate"
                                         value="{{ old('rate') }}" />
                                     @error('rate')
+                                        <div class="form-text text-danger">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                            </div>
+
+                            <div class="col-md-12">
+                                <div class="mb-3">
+                                    <label class="form-label">Role</label>
+                                    <select class="form-select @error('type') error @enderror" name="type">
+                                        <option value="">Type Choice</option>
+                                        <option value="Recommended">Recommended</option>
+                                        <option value="Popular">Popular</option>
+                                    </select>
+                                    @error('type')
                                         <div class="form-text text-danger">{{ $message }}</div>
                                     @enderror
                                 </div>

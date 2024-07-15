@@ -19,7 +19,7 @@ return new class extends Migration
             $table->longText('facility');
             $table->longText('image');
             $table->double('rate')->nullable();
-
+            $table->string('type')->default('Recommended');
             $table->softDeletes();
             $table->timestamps();
         });

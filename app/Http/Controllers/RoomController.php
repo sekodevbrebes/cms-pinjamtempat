@@ -33,6 +33,7 @@ class RoomController extends Controller
      */
     public function create()
     {
+        // Kirimkan array nilai enum ke view
         return view('room.create');
     }
 
@@ -41,6 +42,8 @@ class RoomController extends Controller
      */
     public function store(StoreRoomRequest $request)
     {
+     
+        // Ambil semua data yang dikirim oleh user
         $data = $request->all();
 
         // upload process here
@@ -79,16 +82,19 @@ class RoomController extends Controller
      */
     public function edit(Room $room)
     {
+        $roomTypes = ['Popular', 'Recommended'];
         return view('room.edit', [
-            'room' => $room
+            'room' => $room,
+            'roomTypes' => $roomTypes
         ]);
     }
+    
 
     /**
      * Update the specified resource in storage.
      */
     public function update(UpdateRoomRequest $request, $id)
-{
+    {
     $data = $request->all();
 
     // Find the room by ID
@@ -122,7 +128,7 @@ class RoomController extends Controller
     $room->update($data);
 
     return redirect('rooms')->with('success', 'Room Updated Successfully!');
-}
+    }
     /**
      * Remove the specified resource from storage.
      */

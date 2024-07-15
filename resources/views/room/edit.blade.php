@@ -54,7 +54,7 @@
                             <div class="col-md-6">
                                 <div class="mb-3">
                                     <label class="form-label">Rate</label>
-                                    <input name="rate" type="text"
+                                    <input name="rate" type="number" min="1" max="5"
                                         class="form-control @error('rate') is-invalid @enderror" placeholder="Enter rate"
                                         value="{{ old('rate', $room->rate) }}" />
                                     @error('rate')
@@ -62,6 +62,23 @@
                                     @enderror
                                 </div>
                             </div>
+
+                            <div class="col-md-12">
+                                <div class="mb-3">
+                                    <label class="form-label">Room Type</label>
+                                    <select class="form-select @error('type') error @enderror" name="type">
+
+                                        @foreach ($roomTypes as $type)
+                                            <option value="{{ $type }}"
+                                                {{ $room->type == $type ? 'selected' : '' }}>{{ $type }}</option>
+                                        @endforeach
+                                    </select>
+                                    @error('type')
+                                        <div class="form-text text-danger">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                            </div>
+
 
                             <div class="col-md-12">
                                 <div class="mb-3">

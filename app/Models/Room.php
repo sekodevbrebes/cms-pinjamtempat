@@ -11,7 +11,7 @@ class Room extends Model
 
     // protected $guarded = ['id'];
     protected $fillable = [
-        'name', 'location', 'capacity', 'rate', 'facility', 'image'
+        'name', 'location', 'capacity', 'rate','type', 'facility', 'image'
     ];
 
     // Mengkast field facility menjadi array

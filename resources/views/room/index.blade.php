@@ -27,7 +27,7 @@
                                     <th>Nama Tempat/Ruangan</th>
                                     <th>Capasitas</th>
                                     <th class="text-end">Rate</th>
-
+                                    <th class="text-end">Category</th>
                                     <th class="text-center">Actions</th>
                                 </tr>
                             </thead>
@@ -60,6 +60,9 @@
                                         <td>{{ $room->capacity }}</td>
 
                                         <td class="text-end">{{ $room->rate }}</td>
+
+
+                                        <td class="text-end">{{ $room->type }}</td>
 
                                         <td class="text-center">
                                             <ul class="list-inline me-auto mb-0">
