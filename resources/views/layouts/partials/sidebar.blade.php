@@ -29,7 +29,7 @@
                 <li class="pc-item">
                     <a href="{{ route('rooms.index') }}" class="pc-link"><span class="pc-micon"><svg class="pc-icon">
                                 <use xlink:href="#custom-fatrows"></use>
-                            </svg> </span><span class="pc-mtext">Tempat</span></a>
+                            </svg> </span><span class="pc-mtext">Rooms</span></a>
                 </li>
                 <li class="pc-item"><a href="{{ route('users.index') }}" class="pc-link"><span class="pc-micon">
                             <svg class="pc-icon">

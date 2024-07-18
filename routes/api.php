@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\RoomController;
 use App\Http\Controllers\API\UserController;
+use App\Http\Controllers\API\AgendaController;
 
 // Route::get('/user', function (Request $request) {
 //     return $request->user();
@@ -22,6 +23,9 @@ Route::middleware(['auth:sanctum'])->group(function () {
 
     // Route untuk logout pengguna
     Route::post('logout', [UserController::class, 'logout']);
+
+    // Route untuk mengambil semua data Agenda
+    Route::get('/agendas', [AgendaController::class, 'index']);
 });
 
 // Route untuk proses login pengguna
