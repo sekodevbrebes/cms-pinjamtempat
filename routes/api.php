@@ -25,7 +25,8 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::post('logout', [UserController::class, 'logout']);
 
     // Route untuk mengambil semua data Agenda
-    Route::get('/agendas', [AgendaController::class, 'index']);
+    // Route::get('/agendas', [AgendaController::class, 'index']);
+    Route::resource('/agendas', AgendaController::class);
 });
 
 // Route untuk proses login pengguna
