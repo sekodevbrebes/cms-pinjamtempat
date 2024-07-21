@@ -45,7 +45,6 @@ class AgendaController extends Controller
             'waktu_mulai' => 'required|date_format:H:i:s', // Waktu mulai harus ada dan dalam format jam yang valid
             'waktu_selesai' => 'required|date_format:H:i:s|after:waktu_mulai', // Waktu selesai harus ada, dalam format jam yang valid, dan harus setelah waktu mulai
             'room_id' => 'required|integer|exists:rooms,id', // ID ruangan harus ada, harus berupa integer, dan harus ada di tabel rooms
-            'user_id' => 'required|integer|exists:users,id', // ID pengguna harus ada, harus berupa integer, dan harus ada di tabel users
             'activities' => 'required|string', // Aktivitas harus ada dan berupa string
             'peserta' => 'required|integer', // Jumlah peserta harus ada dan harus berupa integer
         ]);
@@ -80,13 +79,16 @@ class AgendaController extends Controller
             ], 400);
         }
 
+        // Ambil ID pengguna yang sedang login
+        $userId = auth()->id();
+
         // Simpan agenda baru ke database
         $agenda = Agenda::create([
             'tanggal' => $request->tanggal,
             'waktu_mulai' => $request->waktu_mulai,
             'waktu_selesai' => $request->waktu_selesai,
             'room_id' => $request->room_id,
-            'user_id' => $request->user_id,
+            'user_id' => $userId, // Menyimpan ID pengguna yang sedang login
             'activities' => $request->activities,
             'peserta' => $request->peserta,
             'status' => 'Pending', // Menetapkan nilai default 'Pending'
