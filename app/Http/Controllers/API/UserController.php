@@ -25,7 +25,7 @@ class UserController extends Controller
         $credentials = request(['email', 'password']);
         if (!Auth::attempt($credentials)) {
             return response()->json([
-                'message' => 'Unauthorized'
+                'message' => 'Incorrect email or password'
             ], 500);
         }
 
@@ -47,47 +47,6 @@ class UserController extends Controller
             ], 500);
     }
     }
-
-
-    // public function login(Request $request)
-    // {
-    //     try {
-    //         // Validasi input yang diterima dari permintaan
-    //         $request->validate([
-    //             'email' => 'required|email',
-    //             'password' => 'required',
-    //         ]);
-
-    //         // Ambil hanya email dan password dari permintaan
-    //         $credentials = $request->only('email', 'password');
-
-    //         // Cek kredensial pengguna
-    //         if (Auth::attempt($credentials)) {
-    //             // Jika kredensial benar, ambil data pengguna dan buat token autentikasi
-    //             $user = Auth::user();
-    //             $token = $user->createToken('auth_token')->plainTextToken;
-
-    //             // Kembalikan respons JSON dengan token dan data pengguna
-    //             return response()->json([
-    //                 'token_type' => 'Bearer',
-    //                 'access_token' => $token,
-    //                 'message' => 'Login berhasil',
-    //                 'user' => $user
-    //             ]);
-    //         }
-
-    //         // Jika kredensial salah, lemparkan pengecualian validasi
-    //         throw ValidationException::withMessages([
-    //             'email' => ['Kredensial yang diberikan tidak valid.'],
-    //         ]);
-    //     } catch (ValidationException $e) {
-    //         // Kembalikan respons JSON dengan pesan kesalahan validasi
-    //         return response()->json([
-    //             'message' => 'Gagal login',
-    //             'errors' => $error,
-    //         ], 422);
-    //     }
-    // }
 
     // Fungsi untuk mendaftarkan pengguna baru
     public function register(Request $request)

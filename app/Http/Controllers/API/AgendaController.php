@@ -7,29 +7,66 @@ use Illuminate\Http\Request;
 use Carbon\Carbon;
 use App\Models\Agenda;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\URL;
 
 class AgendaController extends Controller
 {
     public function index(Request $request)
     {
-        // Mendapatkan status dari query string, default ke 'Accept' jika tidak ada
-        $status = $request->query('status', 'Accept');
+        // Mendapatkan status dari query string, default ke null jika tidak ada
+        $status = $request->query('status');
 
         // Validasi status yang diperbolehkan
         $allowedStatuses = ['Pending', 'Accept', 'Decline', 'Cancelled'];
-        if (!in_array($status, $allowedStatuses)) {
+
+        // Jika status ada dan tidak valid, kembalikan error
+        if ($status && !in_array($status, $allowedStatuses)) {
             return response()->json([
                 'message' => 'Status tidak valid.',
             ], 400);
         }
 
-        // Mengambil data agenda berdasarkan status dengan eager loading relasi room dan user
-        $agendas = Agenda::with(['room', 'user'])
-            ->where('status', $status)
-            ->get();
+        // Mendapatkan pengguna yang sedang login
+        $user = auth()->user();
 
+        // Jika pengguna tidak ditemukan (misalnya, belum login), kembalikan error
+        if (!$user) {
+            return response()->json([
+                'message' => 'Pengguna tidak ditemukan.',
+            ], 401);
+        }
 
-        // Mengembalikan data agenda dalam bentuk JSON dengan
+        // Jika status ada, ambil data agenda berdasarkan status
+        // Jika tidak ada status, ambil seluruh agenda
+        $query = Agenda::with(['room', 'user'])
+            ->where('user_id', $user->id); // Menambahkan kondisi untuk memfilter berdasarkan pengguna yang sedang login
+
+        if ($status) {
+            $query->where('status', $status);
+        }
+
+        $agendas = $query->get();
+
+        // Mendapatkan URL dasar untuk menyimpan gambar dari storage
+        $baseUrl = URL::to('/storage');
+
+        // Mengubah path gambar menjadi URL lengkap
+        foreach ($agendas as $agenda) {
+            // Misalkan agenda memiliki atribut gambar (misalnya, room_image atau user_image)
+            if ($agenda->room && $agenda->room->image) {
+                $agenda->room->image = collect(json_decode($agenda->room->image))
+                    ->map(function ($image) use ($baseUrl) {
+                        // Hanya tambahkan $baseUrl jika $image tidak sudah termasuk baseUrl
+                        return str_starts_with($image, $baseUrl) ? $image : $baseUrl . '/' . $image;
+                    })
+                    ->toJson();
+            }
+            if ($agenda->user && $agenda->user->profile_image) {
+                $agenda->user->profile_image = $baseUrl . '/' . $agenda->user->profile_image;
+            }
+        }
+
+        // Mengembalikan data agenda dalam bentuk JSON dengan status code 200
         return response()->json([
             'status' => 'success',
             'message' => 'Data agenda berhasil diambil.',
@@ -75,7 +112,7 @@ class AgendaController extends Controller
             // Mengembalikan pesan kesalahan jika sudah ada agenda dengan waktu yang sama atau tumpang tindih
             return response()->json([
                 'status' => 'error',
-                'message' => 'Agenda dengan waktu yang sama atau irisan waktu sudah ada di ruangan yang sama pada tanggal ini.',
+                'message' => 'Agenda dengan waktu yang sama/ada jam yang sama',
             ], 400);
         }
 
