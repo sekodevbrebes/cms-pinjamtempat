@@ -1,0 +1,141 @@
+<?php
+
+namespace App\Http\Controllers\API;
+
+use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
+use Carbon\Carbon;
+use App\Models\Agenda;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\URL;
+
+class AgendaController extends Controller
+{
+    public function index(Request $request)
+    {
+        // Mendapatkan status dari query string, default ke null jika tidak ada
+        $status = $request->query('status');
+
+        // Validasi status yang diperbolehkan
+        $allowedStatuses = ['Pending', 'Accept', 'Decline', 'Cancelled'];
+
+        // Jika status ada dan tidak valid, kembalikan error
+        if ($status && !in_array($status, $allowedStatuses)) {
+            return response()->json([
+                'message' => 'Status tidak valid.',
+            ], 400);
+        }
+
+        // Mendapatkan pengguna yang sedang login
+        $user = auth()->user();
+
+        // Jika pengguna tidak ditemukan (misalnya, belum login), kembalikan error
+        if (!$user) {
+            return response()->json([
+                'message' => 'Pengguna tidak ditemukan.',
+            ], 401);
+        }
+
+        // Jika status ada, ambil data agenda berdasarkan status
+        // Jika tidak ada status, ambil seluruh agenda
+        $query = Agenda::with(['room', 'user'])
+            ->where('user_id', $user->id); // Menambahkan kondisi untuk memfilter berdasarkan pengguna yang sedang login
+
+        if ($status) {
+            $query->where('status', $status);
+        }
+
+        $agendas = $query->get();
+
+        // Mendapatkan URL dasar untuk menyimpan gambar dari storage
+        $baseUrl = URL::to('/storage');
+
+        // Mengubah path gambar menjadi URL lengkap
+        foreach ($agendas as $agenda) {
+            // Misalkan agenda memiliki atribut gambar (misalnya, room_image atau user_image)
+            if ($agenda->room && $agenda->room->image) {
+                $agenda->room->image = collect(json_decode($agenda->room->image))
+                    ->map(function ($image) use ($baseUrl) {
+                        // Hanya tambahkan $baseUrl jika $image tidak sudah termasuk baseUrl
+                        return str_starts_with($image, $baseUrl) ? $image : $baseUrl . '/' . $image;
+                    })
+                    ->toJson();
+            }
+            if ($agenda->user && $agenda->user->profile_image) {
+                $agenda->user->profile_image = $baseUrl . '/' . $agenda->user->profile_image;
+            }
+        }
+
+        // Mengembalikan data agenda dalam bentuk JSON dengan status code 200
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Data agenda berhasil diambil.',
+            'data' => $agendas
+        ]);
+    }
+
+    public function store(Request $request)
+    {
+        // Validasi input dari permintaan
+        $validator = Validator::make($request->all(), [
+            'tanggal' => 'required|date', // Tanggal agenda harus ada dan dalam format tanggal yang valid
+            'waktu_mulai' => 'required|date_format:H:i:s', // Waktu mulai harus ada dan dalam format jam yang valid
+            'waktu_selesai' => 'required|date_format:H:i:s|after:waktu_mulai', // Waktu selesai harus ada, dalam format jam yang valid, dan harus setelah waktu mulai
+            'room_id' => 'required|integer|exists:rooms,id', // ID ruangan harus ada, harus berupa integer, dan harus ada di tabel rooms
+            'activities' => 'required|string', // Aktivitas harus ada dan berupa string
+            'peserta' => 'required|integer', // Jumlah peserta harus ada dan harus berupa integer
+        ]);
+
+        // Tangani kesalahan validasi
+        if ($validator->fails()) {
+            // Mengembalikan pesan kesalahan jika validasi gagal
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Data yang dimasukkan tidak valid.',
+                'errors' => $validator->errors(),
+            ], 422);
+        }
+
+        // Periksa apakah sudah ada agenda dengan waktu yang sama atau irisan waktu di ruangan yang sama pada tanggal yang sama
+        $existingAgenda = Agenda::where('room_id', $request->room_id)
+            ->where('tanggal', $request->tanggal)
+            ->where(function ($query) use ($request) {
+                // Memeriksa apakah ada waktu yang tumpang tindih
+                $query->where(function ($query) use ($request) {
+                    $query->where('waktu_mulai', '<', $request->waktu_selesai)
+                        ->where('waktu_selesai', '>', $request->waktu_mulai);
+                });
+            })
+            ->exists();
+
+        if ($existingAgenda) {
+            // Mengembalikan pesan kesalahan jika sudah ada agenda dengan waktu yang sama atau tumpang tindih
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Cek ada waktu/jam yang sama',
+            ], 400);
+        }
+
+        // Ambil ID pengguna yang sedang login
+        $userId = auth()->id();
+
+        // Simpan agenda baru ke database
+        $agenda = Agenda::create([
+            'tanggal' => $request->tanggal,
+            'waktu_mulai' => $request->waktu_mulai,
+            'waktu_selesai' => $request->waktu_selesai,
+            'room_id' => $request->room_id,
+            'user_id' => $userId, // Menyimpan ID pengguna yang sedang login
+            'activities' => $request->activities,
+            'peserta' => $request->peserta,
+            'status' => 'Pending', // Menetapkan nilai default 'Pending'
+        ]);
+
+        // Mengembalikan respons sukses dengan data agenda yang baru disimpan
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Data agenda berhasil disimpan.',
+            'data' => $agenda, // Data agenda yang baru disimpan
+        ], 201);
+    }
+}
