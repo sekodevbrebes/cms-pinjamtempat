@@ -10,34 +10,7 @@ use Illuminate\Http\Request;
 
 class AgendaController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    // public function index()
-    // {
-    //     // Ambil data Agenda yang memiliki status Pending, Approved, atau Cancelled
-    //     $data = Agenda::whereIn('status', ['Pending', 'Approved', 'Cancelled'])
-    //                   ->with(['room', 'user']) // Menggunakan eager loading untuk memuat relasi room dan user
-    //                   ->get();
-        
-    //     // Menghitung jumlah record berdasarkan masing-masing status
-    //     $pendingCount = Agenda::where('status', 'Pending')->count();
-    //     $approvedCount = Agenda::where('status', 'Approved')->count();
-    //     $cancelledCount = Agenda::where('status', 'Cancelled')->count();
-
-    //     // Menghitung jumlah total record
-    //     $totalCount = Agenda::whereIn('status', ['Pending', 'Approved', 'Cancelled'])->count();
-        
-    //     return view('agenda.index', [
-    //         'agenda' => $data,
-    //         'pendingCount' => $pendingCount,
-    //         'approvedCount' => $approvedCount,
-    //         'cancelledCount' => $cancelledCount,
-    //         'totalCount' => $totalCount,
-    //     ]);
-    // }
-
-    public function index()
+       public function index()
     {
         // Mendapatkan waktu saat ini
         $currentDate = Carbon::now();

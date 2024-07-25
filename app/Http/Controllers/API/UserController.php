@@ -15,37 +15,40 @@ class UserController extends Controller
 {
     // Fungsi untuk login pengguna
     public function login(Request $request)
-{
-    try {
-        $request->validate([
-            'email' => 'email|required',
-            'password' => 'required'
-        ]);
+    {
+        try {
+            $request->validate([
+                'email' => 'email|required',
+                'password' => 'required'
+            ]);
 
-        $credentials = request(['email', 'password']);
-        if (!Auth::attempt($credentials)) {
+            $credentials = request(['email', 'password']);
+            if (!Auth::attempt($credentials)) {
+                return response()->json([
+                    'message' => 'Incorrect email or password'
+                ], 500);
+            }
+
+            $user = User::where('email', $request->email)->first();
+            if (!Hash::check($request->password, $user->password)) {
+                throw new \Exception('Invalid Credentials');
+            }
+
+            // Tambahkan URL dasar pada image path
+            $user->image = url('storage/' . $user->image);
+
+            $tokenResult = $user->createToken('authToken')->plainTextToken;
             return response()->json([
-                'message' => 'Incorrect email or password'
-            ], 500);
-        }
-
-        $user = User::where('email', $request->email)->first();
-        if (!Hash::check($request->password, $user->password)) {
-            throw new \Exception('Invalid Credentials');
-        }
-
-        $tokenResult = $user->createToken('authToken')->plainTextToken;
-        return response()->json([
-            'access_token' => $tokenResult,
-            'token_type' => 'Bearer',
-            'user' => $user
-        ], 200);
+                'access_token' => $tokenResult,
+                'token_type' => 'Bearer',
+                'user' => $user
+            ], 200);
         } catch (Exception $error) {
             return response()->json([
                 'message' => 'Something went wrong',
                 'error' => $error,
             ], 500);
-    }
+        }
     }
 
     // Fungsi untuk mendaftarkan pengguna baru
@@ -137,6 +140,9 @@ class UserController extends Controller
         // Ambil pengguna yang sedang terautentikasi
         $user = Auth::user();
 
+        // Tambahkan base URL ke path gambar
+        $user->image = url($user->image);
+
         // Kembalikan respons JSON dengan data pengguna
         return response()->json([
             'user' => $user,
@@ -167,7 +173,7 @@ class UserController extends Controller
             return response()->json(['message' => 'Foto profil berhasil diperbarui', 'image' => $file]);
         }
     }
-    
+
     // public function updatePhoto(Request $request)
     // {
     //     // Ambil pengguna yang sedang terautentikasi

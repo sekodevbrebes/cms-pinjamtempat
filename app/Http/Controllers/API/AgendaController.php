@@ -112,7 +112,7 @@ class AgendaController extends Controller
             // Mengembalikan pesan kesalahan jika sudah ada agenda dengan waktu yang sama atau tumpang tindih
             return response()->json([
                 'status' => 'error',
-                'message' => 'Agenda dengan waktu yang sama/ada jam yang sama',
+                'message' => 'Cek ada waktu/jam yang sama',
             ], 400);
         }
 

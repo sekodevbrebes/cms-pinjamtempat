@@ -21,9 +21,9 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         // Periksa apakah aplikasi berjalan di lingkungan lokal
-        if (config('app.env') == 'local') {
-            // Jika aplikasi berada di lingkungan lokal, paksa penggunaan skema HTTPS
-            URL::forceScheme('https');
-        }
+        // if (config('app.env') == 'local') {
+        //     // Jika aplikasi berada di lingkungan lokal, paksa penggunaan skema HTTPS
+        //     URL::forceScheme('https');
+        // }
     }
 }
