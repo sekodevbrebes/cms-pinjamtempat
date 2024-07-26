@@ -132,7 +132,7 @@ class AgendaController extends Controller
         $agenda->status = $status;
         $agenda->save();
 
-        return redirect()->route('agenda.show', $id);
+        return redirect()->route('agenda');
     }
     
     public function updateReason(Request $request, $id)
