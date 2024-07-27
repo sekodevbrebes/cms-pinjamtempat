@@ -13,8 +13,9 @@ class AgendaController extends Controller
 {
     public function index(Request $request)
     {
-        // Mendapatkan status dari query string, default ke null jika tidak ada
+        // Mendapatkan status dan all_users dari query string, default ke null jika tidak ada
         $status = $request->query('status');
+        $allUsers = $request->query('all_users', 'false');
 
         // Validasi status yang diperbolehkan
         $allowedStatuses = ['Pending', 'Accept', 'Decline', 'Cancelled'];
@@ -26,25 +27,31 @@ class AgendaController extends Controller
             ], 400);
         }
 
-        // Mendapatkan pengguna yang sedang login
-        $user = auth()->user();
+        // Membuat query dasar untuk mendapatkan agenda
+        $query = Agenda::with(['room', 'user']);
 
-        // Jika pengguna tidak ditemukan (misalnya, belum login), kembalikan error
-        if (!$user) {
-            return response()->json([
-                'message' => 'Pengguna tidak ditemukan.',
-            ], 401);
-        }
-
-        // Jika status ada, ambil data agenda berdasarkan status
-        // Jika tidak ada status, ambil seluruh agenda
-        $query = Agenda::with(['room', 'user'])
-            ->where('user_id', $user->id); // Menambahkan kondisi untuk memfilter berdasarkan pengguna yang sedang login
-
+        // Jika status ada, tambahkan kondisi untuk memfilter berdasarkan status
         if ($status) {
             $query->where('status', $status);
         }
 
+        // Jika all_users tidak ada atau nilainya false, filter berdasarkan pengguna yang sedang login
+        if (!$allUsers) {
+            // Mendapatkan pengguna yang sedang login
+            $user = auth()->user();
+
+            // Jika pengguna tidak ditemukan (misalnya, belum login), kembalikan error
+            if (!$user) {
+                return response()->json([
+                    'message' => 'Pengguna tidak ditemukan.',
+                ], 401);
+            }
+
+            // Filter agenda berdasarkan pengguna yang sedang login
+            $query->where('user_id', $user->id);
+        }
+
+        // Mengambil data agenda
         $agendas = $query->get();
 
         // Mendapatkan URL dasar untuk menyimpan gambar dari storage
@@ -73,6 +80,7 @@ class AgendaController extends Controller
             'data' => $agendas
         ]);
     }
+
 
     public function store(Request $request)
     {
