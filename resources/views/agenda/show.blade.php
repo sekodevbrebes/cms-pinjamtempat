@@ -20,7 +20,6 @@
                                 </p>
                             </div>
                         </div>
-
                         <div class="col-sm-6">
                             <div class="border rounded p-3">
                                 <h6 class="mb-1">Status : </h6>
@@ -34,8 +33,15 @@
                                         {{ $agenda->status }}
                                     </span>
                                 </h5>
+
+                                @if ($agenda->status == 'Cancelled' || $agenda->status == 'Decline')
+                                    <p class="mb-0">Alasan : <br /> {{ $agenda->reason }}</p>
+                                @endif
                             </div>
                         </div>
+
+
+
 
                         <div class="col-12">
                             <div class="table-responsive">
@@ -65,7 +71,7 @@
                             </div>
                         </div>
 
-                        @if ($agenda->status == 'Decline')
+                        @if ($agenda->status == 'Decline' || $agenda->status == 'Cancelled')
                             <div class="col-12">
                                 <div class="border rounded p-3">
 
@@ -73,7 +79,7 @@
                                         @csrf
                                         <div class="mb-3">
                                             <label for="reason" class="form-label">Reason</label>
-                                            <textarea class="form-control" id="reason" name="reason" rows="3" required>{{ old('reason', $agenda->reason ?? '') }}</textarea>
+                                            <textarea class="form-control" id="reason" name="reason" rows="3" required></textarea>
                                         </div>
                                         <button type="submit" class="btn btn-primary">Submit</button>
                                     </form>

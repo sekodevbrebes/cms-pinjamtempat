@@ -21,7 +21,9 @@ class UserController extends Controller
      */
     public function index()
     {
-        $user = User::all();
+
+        // Mengambil semua pengguna dan mengurutkannya berdasarkan id terbaru di atas
+        $user = User::latest()->get();
 
         $title = 'Delete User!';
         $text = "Are you sure you want to delete?";

@@ -27,6 +27,10 @@ Route::middleware(['auth:sanctum'])->group(function () {
     // Route untuk mengambil semua data Agenda
     // Route::get('/agendas', [AgendaController::class, 'index']);
     Route::resource('/agendas', AgendaController::class);
+
+    Route::post('/agendas/{id}/change-status', [AgendaController::class, 'changeStatus']);
+
+    Route::put('/agendas/{id}/reason', [AgendaController::class, 'updateReason']);
 });
 
 // Route untuk proses login pengguna

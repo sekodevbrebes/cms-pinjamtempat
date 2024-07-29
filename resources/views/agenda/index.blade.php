@@ -137,18 +137,16 @@
                                                                 class="avtar avtar-s btn-link-info btn-pc-default"><i
                                                                     class="ti ti-eye f-20"></i></a>
                                                         </li>
-                                                        {{-- <li class="list-inline-item" data-bs-toggle="tooltip"
-                                                            title="Edit">
-                                                            <a href="{{ route('agenda.show', $item->id) }}"
-                                                                class="avtar avtar-s btn-link-success btn-pc-default"><i
-                                                                    class="ti ti-edit f-20"></i></a>
-                                                        </li> --}}
-                                                        <li class="list-inline-item" data-bs-toggle="tooltip"
+
+                                                        <li class="list-inline-item align-bottom" data-bs-toggle="tooltip"
                                                             title="Delete">
-                                                            <a href="#"
-                                                                class="avtar avtar-s btn-link-danger btn-pc-default"><i
-                                                                    class="ti ti-trash f-20"></i></a>
+
+                                                            <a href="{{ route('agenda.destroy', $item->id) }}"
+                                                                class="avtar avtar-xs btn-link-danger btn-pc-default"
+                                                                data-confirm-delete="true"><i
+                                                                    class="ti ti-trash f-18"></i></a>
                                                         </li>
+
                                                     </ul>
                                                 </td>
                                             </tr>
@@ -226,12 +224,15 @@
                                                                     class="avtar avtar-s btn-link-success btn-pc-default"><i
                                                                         class="ti ti-edit f-20"></i></a>
                                                             </li> --}}
-                                                            <li class="list-inline-item" data-bs-toggle="tooltip"
-                                                                title="Delete">
-                                                                <a href="#"
-                                                                    class="avtar avtar-s btn-link-danger btn-pc-default"><i
-                                                                        class="ti ti-trash f-20"></i></a>
+                                                            <li class="list-inline-item align-bottom"
+                                                                data-bs-toggle="tooltip" title="Delete">
+
+                                                                <a href="{{ route('agenda.destroy', $item->id) }}"
+                                                                    class="avtar avtar-xs btn-link-danger btn-pc-default"
+                                                                    data-confirm-delete="true"><i
+                                                                        class="ti ti-trash f-18"></i></a>
                                                             </li>
+
                                                         </ul>
                                                     </td>
                                                 </tr>
@@ -316,12 +317,15 @@
                                                                     class="avtar avtar-s btn-link-success btn-pc-default"><i
                                                                         class="ti ti-edit f-20"></i></a>
                                                             </li> --}}
-                                                            <li class="list-inline-item" data-bs-toggle="tooltip"
-                                                                title="Delete">
-                                                                <a href="#"
-                                                                    class="avtar avtar-s btn-link-danger btn-pc-default"><i
-                                                                        class="ti ti-trash f-20"></i></a>
+                                                            <li class="list-inline-item align-bottom"
+                                                                data-bs-toggle="tooltip" title="Delete">
+
+                                                                <a href="{{ route('agenda.destroy', $item->id) }}"
+                                                                    class="avtar avtar-xs btn-link-danger btn-pc-default"
+                                                                    data-confirm-delete="true"><i
+                                                                        class="ti ti-trash f-18"></i></a>
                                                             </li>
+
                                                         </ul>
                                                     </td>
                                                 </tr>
@@ -407,12 +411,16 @@
                                                                     class="avtar avtar-s btn-link-success btn-pc-default"><i
                                                                         class="ti ti-edit f-20"></i></a>
                                                             </li> --}}
-                                                            <li class="list-inline-item" data-bs-toggle="tooltip"
-                                                                title="Delete">
-                                                                <a href="#"
-                                                                    class="avtar avtar-s btn-link-danger btn-pc-default"><i
-                                                                        class="ti ti-trash f-20"></i></a>
+                                                            <li class="list-inline-item align-bottom"
+                                                                data-bs-toggle="tooltip" title="Delete">
+
+                                                                <a href="{{ route('agenda.destroy', $item->id) }}"
+                                                                    class="avtar avtar-xs btn-link-danger btn-pc-default"
+                                                                    data-confirm-delete="true"><i
+                                                                        class="ti ti-trash f-18"></i></a>
                                                             </li>
+
+
                                                         </ul>
                                                     </td>
                                                 </tr>

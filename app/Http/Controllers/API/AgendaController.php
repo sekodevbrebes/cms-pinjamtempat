@@ -14,29 +14,36 @@ class AgendaController extends Controller
     public function index(Request $request)
     {
         // Mendapatkan status dan all_users dari query string, default ke null jika tidak ada
-        $status = $request->query('status');
+        $statuses = $request->query('status'); // Ini bisa berupa string atau array
         $allUsers = $request->query('all_users', 'false');
 
         // Validasi status yang diperbolehkan
         $allowedStatuses = ['Pending', 'Accept', 'Decline', 'Cancelled'];
 
-        // Jika status ada dan tidak valid, kembalikan error
-        if ($status && !in_array($status, $allowedStatuses)) {
-            return response()->json([
-                'message' => 'Status tidak valid.',
-            ], 400);
+        // Jika status ada, pastikan bahwa semua status yang diberikan valid
+        if ($statuses) {
+            // Jika status berupa string, ubah menjadi array
+            $statuses = is_array($statuses) ? $statuses : explode(',', $statuses);
+
+            foreach ($statuses as $status) {
+                if (!in_array($status, $allowedStatuses)) {
+                    return response()->json([
+                        'message' => 'Status tidak valid.',
+                    ], 400);
+                }
+            }
         }
 
         // Membuat query dasar untuk mendapatkan agenda
         $query = Agenda::with(['room', 'user']);
 
         // Jika status ada, tambahkan kondisi untuk memfilter berdasarkan status
-        if ($status) {
-            $query->where('status', $status);
+        if ($statuses) {
+            $query->whereIn('status', $statuses);
         }
 
         // Jika all_users tidak ada atau nilainya false, filter berdasarkan pengguna yang sedang login
-        if (!$allUsers) {
+        if ($allUsers === 'false') {
             // Mendapatkan pengguna yang sedang login
             $user = auth()->user();
 
@@ -81,7 +88,6 @@ class AgendaController extends Controller
         ]);
     }
 
-
     public function store(Request $request)
     {
         // Validasi input dari permintaan
@@ -112,7 +118,9 @@ class AgendaController extends Controller
                 $query->where(function ($query) use ($request) {
                     $query->where('waktu_mulai', '<', $request->waktu_selesai)
                         ->where('waktu_selesai', '>', $request->waktu_mulai);
-                });
+                })
+                    // Mengecualikan agenda dengan status 'Cancelled' dan 'Decline'
+                    ->whereNotIn('status', ['Cancelled', 'Decline']);
             })
             ->exists();
 
@@ -145,5 +153,48 @@ class AgendaController extends Controller
             'message' => 'Data agenda berhasil disimpan.',
             'data' => $agenda, // Data agenda yang baru disimpan
         ], 201);
+    }
+
+
+    public function changeStatus(Request $request, $id)
+    {
+        // Validasi permintaan
+        $request->validate([
+            'status' => 'required|string|in:Cancelled',
+        ]);
+
+        try {
+            // Temukan agenda berdasarkan ID
+            $agenda = Agenda::findOrFail($id);
+
+            // Perbarui status agenda
+            $agenda->status = $request->status;
+            $agenda->save();
+
+            // Kembalikan respons JSON sukses
+            return response()->json([
+                'success' => true,
+                'message' => 'Agenda status updated successfully',
+                'data' => $agenda
+            ], 200);
+        } catch (\Exception $e) {
+            // Tangani kesalahan dan kembalikan respons JSON yang sesuai
+            return response()->json([
+                'success' => false,
+                'message' => 'An error occurred: ' . $e->getMessage(),
+            ], 500);
+        }
+    }
+
+    public function updateReason(Request $request, $id)
+    {
+        $agenda = Agenda::findOrFail($id);
+        $agenda->update($request->validate(['reason' => 'nullable|string|max:255']));
+
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Reason updated successfully.',
+            'data' => $agenda,
+        ]);
     }
 }
