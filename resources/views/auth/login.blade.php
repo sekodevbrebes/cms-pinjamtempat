@@ -59,11 +59,10 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0,minimal-ui">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="description"
-        content="Able Pro is trending dashboard template made using Bootstrap 5 design framework. Able Pro is available in Bootstrap, React, CodeIgniter, Angular,  and .net Technologies.">
+    <meta name="description" content="Sistem Informasi Ketersediaan Tempat - Si KPT Setda Brebes">
     <meta name="keywords"
-        content="Bootstrap admin template, Dashboard UI Kit, Dashboard Template, Backend Panel, react dashboard, angular dashboard">
-    <meta name="author" content="Phoenixcoded"><!-- [Favicon] icon -->
+        content="Sistem Informasi Pinjam Tempat, Si KPT, Setda Brebes, Kantor Pemerintahan Terpadu Brebes, KPT">
+    <meta name="author" content="Tim Dev Setda Brebes"><!-- [Favicon] icon -->
     <link rel="icon" href="../assets/images/favicon.svg" type="image/x-icon"><!-- [Font] Family -->
     <link rel="stylesheet" href="../assets/fonts/inter/inter.css" id="main-font-link">
     <!-- [phosphor Icons] https://phosphoricons.com/ -->
@@ -94,7 +93,7 @@
                     <div class="card-body">
                         <div class="text-center">
                             <a href="#">
-                                <img src="../assets/images/logo-dark.svg" alt="img">
+                                <img src="../assets/images/sikpt.png" alt="img" class="logo-img">
                             </a>
                         </div>
                         <div class="saprator my-3"><span></span></div>
@@ -131,7 +130,9 @@
                 </div>
             </div>
         </div>
-    </div><!-- [ Main Content ] end --><!-- Required Js -->
+    </div>
+
+    <!-- [ Main Content ] end --><!-- Required Js -->
     <script src="../assets/js/plugins/popper.min.js"></script>
     <script src="../assets/js/plugins/simplebar.min.js"></script>
     <script src="../assets/js/plugins/bootstrap.min.js"></script>
