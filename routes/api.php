@@ -16,7 +16,10 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('user', [UserController::class, 'fetch']);
 
     // Route untuk memperbarui profil pengguna
-    Route::post('user', [UserController::class, 'updateProfile']);
+    Route::post('user/{id}/update-profile', [UserController::class, 'updateProfile']);
+
+    // Rute untuk mendapatkan detail pengguna
+    Route::get('/user/{id}', [UserController::class, 'show']);
 
     // Route untuk memperbarui foto pengguna
     Route::post('user/photo', [UserController::class, 'updatePhoto']);
@@ -31,6 +34,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::post('/agendas/{id}/change-status', [AgendaController::class, 'changeStatus']);
 
     Route::put('/agendas/{id}/reason', [AgendaController::class, 'updateReason']);
+    
 });
 
 // Route untuk proses login pengguna

@@ -174,27 +174,19 @@ class UserController extends Controller
         }
     }
 
-    // public function updatePhoto(Request $request)
-    // {
-    //     // Ambil pengguna yang sedang terautentikasi
-    //     $user = Auth::user();
+    // Metode untuk mendapatkan data pengguna berdasarkan ID
+    public function show($id)
+    {
+        // Temukan pengguna berdasarkan ID
+        $user = User::find($id);
 
-    //     // Validasi input gambar
-    //     $request->validate([
-    //         'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048', // Validasi untuk pastikan input adalah file gambar dengan tipe dan ukuran yang sesuai
-    //     ]);
+        if (!$user) {
+            return response()->json(['message' => 'User not found'], 404);
+        }
 
-    //     // Jika ada file gambar yang diunggah
-    //     if ($request->hasFile('image')) {
-    //         // Simpan gambar ke direktori 'public/users'
-    //         $user->image = $request->file('image')->store('assets/image-user', 'public');
-    //         $user->update(); // Simpan nama file gambar ke database
-    //     }
-
-    //     // Kembalikan respons JSON dengan pesan sukses dan data pengguna yang diperbarui
-    //     return response()->json([
-    //         'message' => 'Foto profil berhasil diperbarui',
-    //         'user' => $user,
-    //     ]);
-    // }
+        // Kembalikan data pengguna
+        return response()->json([
+            'user' => $user
+        ], 200);
+    }
 }
