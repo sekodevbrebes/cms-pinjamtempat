@@ -17,26 +17,39 @@ class UserController extends Controller
     public function login(Request $request)
     {
         try {
+            // Validasi input request
             $request->validate([
                 'email' => 'email|required',
                 'password' => 'required'
             ]);
 
-            $credentials = request(['email', 'password']);
-            if (!Auth::attempt($credentials)) {
+            // Periksa apakah email sudah terdaftar
+            $user = User::where('email', $request->email)->first();
+            if (!$user) {
                 return response()->json([
-                    'message' => 'Incorrect email or password'
-                ], 500);
+                    'message' => 'Email tidak terdaftar, silahkan daftar terlebih dahulu'
+                ], 400);
             }
 
-            $user = User::where('email', $request->email)->first();
+            // Periksa kredensial
+            $credentials = request(['password']);
+            if (!Auth::attempt($credentials)) {
+                return response()->json([
+                    'message' => 'Password salah'
+                ], 401);
+            }
+
+            // Periksa password
             if (!Hash::check($request->password, $user->password)) {
-                throw new \Exception('Invalid Credentials');
+                return response()->json([
+                    'message' => 'Kredensial tidak valid'
+                ], 401);
             }
 
             // Tambahkan URL dasar pada image path
             $user->image = url('storage/' . $user->image);
 
+            // Buat token
             $tokenResult = $user->createToken('authToken')->plainTextToken;
             return response()->json([
                 'access_token' => $tokenResult,
@@ -45,11 +58,12 @@ class UserController extends Controller
             ], 200);
         } catch (Exception $error) {
             return response()->json([
-                'message' => 'Something went wrong',
-                'error' => $error,
+                'message' => 'Terjadi kesalahan',
+                'error' => $error->getMessage(),
             ], 500);
         }
     }
+
 
     // Fungsi untuk mendaftarkan pengguna baru
     public function register(Request $request)
@@ -82,16 +96,34 @@ class UserController extends Controller
                 'token_type' => 'Bearer',
                 'access_token' => $token,
                 'message' => 'Registrasi berhasil',
-                'user' => $user, // Mengembalikan user yang telah terdaftar, agar dapat diisi data lain sesuai kebutuhan
+                'user' => $user,
             ], 201);
-        } catch (\Exception $e) {
-            // Kembalikan respons JSON dengan pesan kesalahan
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            // Tangani kesalahan validasi
+            $errors = $e->errors();
+
+            // Jika email sudah ada
+            if (isset($errors['email'])) {
+                return response()->json([
+                    'message' => 'Gagal registrasi',
+                    'error' => 'Email sudah tersedia.',
+                ], 422);
+            }
+
+            // Untuk kesalahan validasi lainnya
             return response()->json([
                 'message' => 'Gagal registrasi',
-                'error' => $e->getMessage(),
+                'errors' => $errors,
+            ], 422);
+        } catch (\Exception $e) {
+            // Tangani kesalahan umum
+            return response()->json([
+                'message' => 'Gagal registrasi',
+                'error' => 'Terjadi kesalahan: ' . $e->getMessage(),
             ], 400);
         }
     }
+
 
     // Fungsi untuk logout pengguna
     public function logout(Request $request)
