@@ -32,6 +32,14 @@ class UserController extends Controller
             }
 
             // Periksa kredensial
+            $credentials = $request->only('email', 'password');
+            if (!Auth::attempt($credentials)) {
+                return response()->json([
+                    'message' => 'Password salah'
+                ], 401);
+            }
+            
+            //Kye sing alah
             $credentials = request(['password']);
             if (!Auth::attempt($credentials)) {
                 return response()->json([
