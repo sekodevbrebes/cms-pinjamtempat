@@ -60,7 +60,7 @@
                                             <td>{{ $agenda->room->name }}</td>
                                             <td>{{ \Carbon\Carbon::parse($agenda->tanggal)->locale('id')->translatedFormat('l, d F Y') }}
                                             <td>{{ $agenda->waktu_mulai }} - {{ $agenda->waktu_selesai }}</td>
-                                            <td>300</td>
+                                            <td>{{ $agenda->peserta }}</td>
                                             <td>{{ $agenda->activities }}</td>
                                         </tr>
                                     </tbody>
