@@ -15,62 +15,48 @@ class UserController extends Controller
 {
     // Fungsi untuk login pengguna
     public function login(Request $request)
-    {
-        try {
-            // Validasi input request
-            $request->validate([
-                'email' => 'email|required',
-                'password' => 'required'
-            ]);
+{
+    try {
+        // Validasi input request
+        $request->validate([
+            'email' => 'email|required',
+            'password' => 'required'
+        ]);
 
-            // Periksa apakah email sudah terdaftar
-            $user = User::where('email', $request->email)->first();
-            if (!$user) {
-                return response()->json([
-                    'message' => 'Email tidak terdaftar, silahkan daftar terlebih dahulu'
-                ], 400);
-            }
-
-            // Periksa kredensial
-            $credentials = $request->only('email', 'password');
-            if (!Auth::attempt($credentials)) {
-                return response()->json([
-                    'message' => 'Password salah'
-                ], 401);
-            }
-            
-            //Kye sing alah
-            $credentials = request(['password']);
-            if (!Auth::attempt($credentials)) {
-                return response()->json([
-                    'message' => 'Password salah'
-                ], 401);
-            }
-
-            // Periksa password
-            if (!Hash::check($request->password, $user->password)) {
-                return response()->json([
-                    'message' => 'Kredensial tidak valid'
-                ], 401);
-            }
-
-            // Tambahkan URL dasar pada image path
-            $user->image = url('storage/' . $user->image);
-
-            // Buat token
-            $tokenResult = $user->createToken('authToken')->plainTextToken;
+        // Periksa apakah email sudah terdaftar
+        $user = User::where('email', $request->email)->first();
+        if (!$user) {
             return response()->json([
-                'access_token' => $tokenResult,
-                'token_type' => 'Bearer',
-                'user' => $user
-            ], 200);
-        } catch (Exception $error) {
-            return response()->json([
-                'message' => 'Terjadi kesalahan',
-                'error' => $error->getMessage(),
-            ], 500);
+                'message' => 'Email tidak terdaftar, silahkan daftar terlebih dahulu'
+            ], 400);
         }
+
+        // Periksa kredensial
+        $credentials = $request->only('email', 'password');
+        if (!Auth::attempt($credentials)) {
+            return response()->json([
+                'message' => 'Password salah'
+            ], 401);
+        }
+
+        // Tambahkan URL dasar pada image path
+        $user->image = url('storage/' . $user->image);
+
+        // Buat token
+        $tokenResult = $user->createToken('authToken')->plainTextToken;
+        return response()->json([
+            'access_token' => $tokenResult,
+            'token_type' => 'Bearer',
+            'user' => $user
+        ], 200);
+    } catch (Exception $error) {
+        return response()->json([
+            'message' => 'Terjadi kesalahan',
+            'error' => $error->getMessage(),
+        ], 500);
     }
+}
+
 
 
     // Fungsi untuk mendaftarkan pengguna baru
