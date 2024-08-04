@@ -160,7 +160,7 @@ class AgendaController extends Controller
     {
         // Validasi permintaan
         $request->validate([
-            'status' => 'required|string|in:Cancelled',
+            'status' => 'required|string',
         ]);
 
         try {
