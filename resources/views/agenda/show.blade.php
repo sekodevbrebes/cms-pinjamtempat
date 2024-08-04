@@ -49,6 +49,7 @@
                                     <thead>
                                         <tr>
                                             <th>ROOM</th>
+                                            <th>CREATE AT</th>
                                             <th>DATE</th>
                                             <th>TIME</th>
                                             <th>PESERTA</th>
@@ -58,6 +59,7 @@
                                     <tbody>
                                         <tr>
                                             <td>{{ $agenda->room->name }}</td>
+                                            <td>{{ \Carbon\Carbon::parse($agenda->created_at)->locale('id')->translatedFormat('l, d F Y') }}
                                             <td>{{ \Carbon\Carbon::parse($agenda->tanggal)->locale('id')->translatedFormat('l, d F Y') }}
                                             <td>{{ $agenda->waktu_mulai }} - {{ $agenda->waktu_selesai }}</td>
                                             <td>{{ $agenda->peserta }}</td>

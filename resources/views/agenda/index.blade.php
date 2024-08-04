@@ -69,7 +69,7 @@
                                             <th>#</th>
                                             <th>User Name</th>
                                             <th>Room</th>
-                                            <th>Create Date</th>
+                                            <th>Date</th>
                                             <th class="text-center">Time</th>
                                             <th>Status</th>
                                             <th class="text-center">Actions</th>
@@ -254,7 +254,7 @@
                                             <th>#</th>
                                             <th>User Name</th>
                                             <th>Room</th>
-                                            <th>Create Date</th>
+                                            <th>Date</th>
                                             <th class="text-center">Time</th>
                                             <th>Status</th>
                                             <th class="text-center">Actions</th>
@@ -347,7 +347,7 @@
                                             <th>#</th>
                                             <th>User Name</th>
                                             <th>Room</th>
-                                            <th>Create Date</th>
+                                            <th>Date</th>
                                             <th>Time</th>
                                             <th>Status</th>
                                             <th class="text-end">Actions</th>
@@ -442,7 +442,7 @@
                                             <th>#</th>
                                             <th>User Name</th>
                                             <th>Room</th>
-                                            <th>Create Date</th>
+                                            <th>Date</th>
                                             <th>Time</th>
                                             <th>Activity</th>
                                             <th>Information</th>
@@ -508,7 +508,7 @@
                                             <th>#</th>
                                             <th>User Name</th>
                                             <th>Room</th>
-                                            <th>Create Date</th>
+                                            <th>Date</th>
                                             <th>Time</th>
                                             <th>Activity</th>
 
