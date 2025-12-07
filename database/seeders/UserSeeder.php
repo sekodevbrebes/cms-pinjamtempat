@@ -18,7 +18,7 @@ class UserSeeder extends Seeder
             [
                 'name'           => 'Administrator',
                 'email'          => 'admin@mail.com',
-                'password'       => Hash::make('password',),
+                'password'       => Hash::make('',),
                 'remember_token' => null,
                 'instansi'       =>'DP3KB Kabupaten Brebes',
                 'alamat'        =>'Bagian Umum Setda',
@@ -30,7 +30,7 @@ class UserSeeder extends Seeder
             [
                 'name'           => 'Sus Hardianto',
                 'email'          => 'kaksus15@mail.com',
-                'password'       => Hash::make('password',),
+                'password'       => Hash::make('',),
                 'remember_token' => null,
                 'instansi'       =>'Bagian Umum Setda Kab. Brebes',
                 'alamat'        =>'Aula Lantai 5 - KPT Jl. Proklamasi No. 77 Brebes',
@@ -42,7 +42,7 @@ class UserSeeder extends Seeder
             [
                 'name'           => 'Lilik Meidiawati',
                 'email'          => 'user@mail.com',
-                'password'       => Hash::make('password',),
+                'password'       => Hash::make('',),
                 'remember_token' => null,
                 'instansi'       =>'DP3KB Kabupaten Brebes',
                 'alamat'        =>'Jl. Veteran No. 10 Brebes',
