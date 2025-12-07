@@ -17,7 +17,7 @@ class UserSeeder extends Seeder
         $user = [
             [
                 'name'           => 'Administrator',
-                'email'          => 'admin@mail.com',
+                'email'          => 'admine@mailx.com',
                 'password'       => Hash::make('',),
                 'remember_token' => null,
                 'instansi'       =>'DP3KB Kabupaten Brebes',
@@ -29,7 +29,7 @@ class UserSeeder extends Seeder
             ],
             [
                 'name'           => 'Sus Hardianto',
-                'email'          => 'kaksus15@mail.com',
+                'email'          => 'kaksus152@maile.com',
                 'password'       => Hash::make('',),
                 'remember_token' => null,
                 'instansi'       =>'Bagian Umum Setda Kab. Brebes',
@@ -41,7 +41,7 @@ class UserSeeder extends Seeder
             ],
             [
                 'name'           => 'Lilik Meidiawati',
-                'email'          => 'user@mail.com',
+                'email'          => 'usere@maile.com',
                 'password'       => Hash::make('',),
                 'remember_token' => null,
                 'instansi'       =>'DP3KB Kabupaten Brebes',
